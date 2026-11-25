@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenya Onna</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --card: #161616;
+  --card-hover: #1e1e1e;
+  --accent: #d4a053;
+  --accent2: #c08830;
+  --accent-dim: rgba(212,160,83,.15);
+  --text: #e8e0d4;
+  --text2: #9a9088;
+  --text3: #605850;
+  --border: #2a2420;
+  --modal-bg: #111;
+  --star: #d4a053;
+  --star-off: #3a3530;
+  --danger: #c0392b;
+  --success: #27ae60;
+  --whatsapp: #25d366;
+  --search-bg: #1a1a1a;
+  --tag: #221e18;
+  --drop-bg: rgba(212,160,83,.08);
+  --drop-border: var(--accent);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent2);}
+
+header{background:linear-gradient(135deg,#1a1208 0%,#0a0a0a 50%,#1a1208 100%);border-bottom:1px solid var(--border);padding:18px 24px 14px;position:sticky;top:0;z-index:100;}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.logo{font-size:26px;font-weight:700;background:linear-gradient(135deg,var(--accent),#e8c878,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;}
+.logo span{font-size:13px;font-weight:400;letter-spacing:1px;opacity:.7;}
+.stats{display:flex;gap:14px;font-size:12px;color:var(--text2);}
+.stats b{color:var(--accent);}
+.add-btn{padding:7px 16px;border-radius:8px;background:var(--accent);color:#000;border:none;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .2s;white-space:nowrap;}
+.add-btn:hover{background:var(--accent2);transform:scale(1.03);}
+.btn-delete{background:#c0392b !important;color:#fff;margin-top:6px;border:none;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-delete:hover{background:#e74c3c !important;}
+.confirm-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
+.confirm-overlay.open{display:flex;}
+.confirm-box{background:var(--modal-bg);border:1px solid var(--border);border-radius:16px;padding:28px 32px;text-align:center;max-width:360px;width:calc(100% - 40px);box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.confirm-icon{font-size:48px;margin-bottom:12px;}
+.confirm-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.confirm-msg{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5;}
+.confirm-msg b{color:var(--accent);}
+.confirm-btns{display:flex;gap:10px;justify-content:center;}
+.confirm-btns button{padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.confirm-cancel{background:var(--tag);color:var(--text);border:1px solid var(--border) !important;}
+.confirm-cancel:hover{background:var(--border);}
+.confirm-yes{background:#e74c3c;color:#fff;}
+.confirm-yes:hover{background:#c0392b;}
+.search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.search-box{flex:1;min-width:200px;position:relative;}
+.search-box input{width:100%;padding:9px 14px 9px 36px;background:var(--search-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s;}
+.search-box input:focus{border-color:var(--accent);}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--text2);fill:none;stroke-width:2;stroke-linecap:round;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;}
+.fbtn{padding:5px 12px;border-radius:20px;background:var(--tag);border:1px solid var(--border);color:var(--text2);font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.fbtn:hover,.fbtn.active{background:var(--accent);color:#000;border-color:var(--accent);}
+.filter-panel{background:var(--card);border-top:1px solid var(--border);padding:10px 24px;display:flex;flex-direction:column;gap:8px;}
+.fp-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.fp-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;min-width:70px;}
+.fp-btn{padding:4px 11px;border-radius:16px;background:var(--tag);border:1px solid var(--border);color:var(--text2);font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.fp-btn:hover{border-color:var(--text3);}
+.fp-btn.on{background:var(--accent);color:#000;border-color:var(--accent);}
+.fp-btn.seg-chichi.on{background:#e056a0;color:#fff;border-color:#e056a0;}
+.fp-btn.seg-nyash.on{background:#9b59b6;color:#fff;border-color:#9b59b6;}
+.fp-btn.seg-creampie.on{background:#f39c12;color:#000;border-color:#f39c12;}
+.fp-btn.seg-skinnychatte.on{background:#00bcd4;color:#000;border-color:#00bcd4;}
+.fp-btn.seg-needcreampie.on{background:#ff5722;color:#fff;border-color:#ff5722;}
+.fp-btn.seg-tightpussy.on{background:#e91e63;color:#fff;border-color:#e91e63;}
+.fp-btn.seg-premium.on{background:linear-gradient(135deg,#f5c842,#e6a817);color:#000;border-color:#e6a817;}
+.fp-btn.seg-juicypussy.on{background:#9c27b0;color:#fff;border-color:#9c27b0;}
+.fp-btn.seg-sanno.on{background:#4caf50;color:#fff;border-color:#4caf50;}
+.fp-btn.seg-maputte.on{background:#ff9800;color:#000;border-color:#ff9800;}
+.fp-btn.seg-wifey.on{background:#e91e63;color:#fff;border-color:#e91e63;}
+.fp-btn.loc-nairobi.on{background:#27ae60;color:#fff;border-color:#27ae60;}
+.fp-btn.loc-tokyo.on{background:#ff6b81;color:#fff;border-color:#ff6b81;}
+.fp-btn.loc-toronto.on{background:#3498db;color:#fff;border-color:#3498db;}
+.fp-btn.loc-nyc.on{background:#f1c40f;color:#000;border-color:#f1c40f;}
+.fp-btn.loc-calgary.on{background:#c0392b;color:#fff;border-color:#c0392b;}
+.fp-btn.loc-lagos.on{background:#1abc9c;color:#fff;border-color:#1abc9c;}
+.fp-btn.loc-montreal.on{background:#8e44ad;color:#fff;border-color:#8e44ad;}
+.fp-btn.loc-dubai.on{background:#d4a853;color:#000;border-color:#d4a853;}
+.fp-btn.age-btn.on{background:#00bcd4;color:#000;border-color:#00bcd4;}
+.sort-sel{padding:7px 10px;background:var(--search-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;outline:none;cursor:pointer;}
+.sort-sel option{background:var(--card);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;padding:18px 24px 40px;}
+.card{background:var(--card);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid transparent;position:relative;}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,160,83,.1);border-color:var(--border);}
+.card-img{width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--tag);display:block;}
+.card-placeholder{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--tag),#1e1a14);display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--accent);opacity:.3;}
+.card-info{padding:8px 10px 10px;}
+.card-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+.card-meta{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text2);margin-bottom:4px;}
+.card-age{background:var(--accent-dim);color:var(--accent);padding:1px 6px;border-radius:10px;font-weight:600;font-size:10px;}
+.card-phone{font-size:10px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-stars{margin-top:4px;display:flex;gap:1px;}
+.card-stars svg{width:11px;height:11px;}
+
+/* MODAL - FULL SCREEN */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);overflow:hidden;}
+.modal-overlay.open{display:flex;align-items:center;justify-content:center;}
+.modal{background:var(--modal-bg);max-width:920px;width:calc(100% - 32px);border-radius:16px;border:1px solid var(--border);overflow:hidden;position:relative;display:grid;grid-template-columns:1fr 1fr;height:calc(100vh - 32px);max-height:calc(100vh - 32px);}
+.modal-close{position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.7);border:none;color:var(--text);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.modal-close:hover{background:var(--danger);}
+
+.modal-left{position:relative;background:#0a0a0a;display:flex;flex-direction:column;overflow-y:auto;min-height:0;}
+.carousel{position:relative;min-height:320px;height:50vh;max-height:500px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#080808;flex-shrink:0;}
+.carousel img{width:100%;height:100%;object-fit:contain;cursor:zoom-in;position:absolute;inset:0;background:#080808;}
+.carousel-empty{font-size:80px;color:var(--accent);opacity:.2;}
+.carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.6);border:2px solid rgba(255,255,255,.15);color:#fff;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .2s;z-index:5;}
+.carousel-nav:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+.carousel-nav.prev{left:10px;}
+.carousel-nav.next{right:10px;}
+.carousel.multi .carousel-nav{display:flex;}
+.carousel-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:5;}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;transition:all .2s;}
+.carousel-dot.active{background:var(--accent);transform:scale(1.2);}
+.carousel-counter{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);color:var(--text2);font-size:11px;padding:4px 10px;border-radius:12px;z-index:5;}
+
+/* Upload drop zone */
+.upload-zone{padding:12px;border-top:1px solid var(--border);background:#0d0d0d;}
+.drop-area{border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.drop-area:hover,.drop-area.dragover{border-color:var(--accent);background:var(--drop-bg);}
+.drop-area svg{width:28px;height:28px;stroke:var(--text3);fill:none;stroke-width:1.5;}
+.drop-area.dragover svg{stroke:var(--accent);}
+.drop-text{font-size:11px;color:var(--text3);}
+.drop-text b{color:var(--accent);cursor:pointer;}
+.thumb-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.thumb{width:48px;height:48px;border-radius:6px;object-fit:cover;border:1px solid var(--border);cursor:pointer;transition:border-color .2s;}
+.thumb:hover{border-color:var(--accent);}
+.thumb-wrap{position:relative;display:inline-block;}
+.thumb-del{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:var(--danger);border:none;color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.thumb-wrap:hover .thumb-del{opacity:1;}
+.thumb.is-profile{border:2px solid var(--accent);box-shadow:0 0 6px var(--accent);}
+.set-profile-btn{position:absolute;bottom:12px;right:12px;z-index:6;padding:6px 14px;border-radius:8px;background:rgba(0,0,0,.75);border:1px solid var(--accent);color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;backdrop-filter:blur(4px);}
+.set-profile-btn:hover{background:var(--accent);color:#000;}
+.set-profile-btn.is-current{background:var(--accent);color:#000;pointer-events:none;opacity:.7;}
+
+.modal-right{overflow-y:auto;padding:20px 22px 24px;display:flex;flex-direction:column;gap:0;min-height:0;-webkit-overflow-scrolling:touch;}
+
+.profile-header{margin-bottom:14px;}
+.profile-name{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:2px;}
+.profile-sub{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.profile-age-badge{background:var(--accent);color:#000;padding:2px 10px;border-radius:12px;font-weight:700;font-size:12px;}
+
+.profile-rating{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.profile-rating label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;}
+.star-row{display:flex;gap:3px;}
+.star-btn{background:none;border:none;cursor:pointer;padding:1px;}
+.star-btn svg{width:22px;height:22px;transition:transform .15s;}
+.star-btn:hover svg{transform:scale(1.2);}
+
+/* WhatsApp */
+.wa-row{display:flex;gap:8px;margin-bottom:16px;}
+.wa-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;flex:1;justify-content:center;}
+.wa-btn:hover{opacity:.85;transform:translateY(-1px);}
+.wa-msg{background:var(--whatsapp);color:#fff;}
+.wa-call{background:var(--card);color:var(--text);border:1px solid var(--border);}
+.wa-btn svg{width:18px;height:18px;}
+
+.field-group{margin-bottom:12px;}
+.field-label{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;font-weight:600;}
+.field-input{width:100%;padding:8px 11px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--accent);}
+textarea.field-input{resize:vertical;min-height:50px;font-family:inherit;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+.video-section{margin-top:6px;}
+.video-list{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+.video-item{display:flex;align-items:center;gap:6px;padding:6px 8px;background:var(--card);border-radius:6px;border:1px solid var(--border);}
+.video-item a{flex:1;color:var(--accent);font-size:12px;word-break:break-all;text-decoration:none;}
+.video-item a:hover{text-decoration:underline;}
+.video-item button{background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;}
+.add-row{display:flex;gap:6px;margin-top:6px;}
+.add-row input{flex:1;}
+.btn{padding:7px 14px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn:hover{opacity:.85;}
+.btn-accent{background:var(--accent);color:#000;}
+.btn-save{background:var(--success);color:#fff;margin-top:12px;padding:10px;font-size:14px;}
+.btn-save:hover{background:#2ecc71;}
+
+/* Zoom */
+.zoom-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.97);cursor:zoom-out;justify-content:center;align-items:center;}
+.zoom-overlay.open{display:flex;}
+.zoom-overlay img{max-width:95vw;max-height:95vh;object-fit:contain;border-radius:4px;}
+
+.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text2);font-size:15px;}
+.section-divider{border:none;border-top:1px solid var(--border);margin:12px 0;}
+
+/* Favourites carousel */
+.fav-strip{background:linear-gradient(180deg,#141008,var(--bg));border-bottom:1px solid var(--border);padding:14px 24px 12px;display:none;}
+.fav-strip.has-favs{display:block;}
+.fav-strip-title{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:10px;}
+.fav-strip-inner{display:flex;align-items:center;gap:6px;}
+.fav-arrow{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--border);color:var(--accent);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;user-select:none;}
+.fav-arrow:hover{background:var(--accent);color:#000;border-color:var(--accent);transform:scale(1.1);}
+.fav-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;}
+.fav-scroll::-webkit-scrollbar{height:4px;}
+.fav-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.fav-card{flex:0 0 120px;scroll-snap-align:start;cursor:pointer;text-align:center;transition:transform .2s;}
+.fav-card:hover{transform:scale(1.05);}
+.fav-card img{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);display:block;margin:0 auto 6px;}
+.fav-card .fav-placeholder{width:100px;height:100px;border-radius:50%;border:3px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--accent);opacity:.4;margin:0 auto 6px;background:var(--tag);}
+.fav-card-name{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;}
+.fav-card-badges{display:flex;gap:3px;justify-content:center;margin-top:3px;}
+
+/* Toggle buttons in profile */
+.toggle-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.toggle-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:2px solid var(--border);background:var(--card);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;user-select:none;}
+.toggle-btn:hover{border-color:var(--text3);}
+.toggle-btn.on-fav{border-color:var(--accent);background:var(--accent-dim);color:var(--accent);}
+.toggle-btn.on-urgent{border-color:#e74c3c;background:rgba(231,76,60,.12);color:#e74c3c;}
+.toggle-btn svg{width:16px;height:16px;}
+
+/* Category checkboxes */
+.cat-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.cat-check{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s;user-select:none;}
+.cat-check:hover{border-color:var(--text3);}
+.cat-check.checked{border-color:#e056a0;background:rgba(224,86,160,.12);color:#e056a0;}
+.cat-check.checked.cat-nyash{border-color:#9b59b6;background:rgba(155,89,182,.12);color:#9b59b6;}
+.cat-check.checked.cat-creampie{border-color:#f39c12;background:rgba(243,156,18,.12);color:#f39c12;}
+.cat-check.checked.cat-skinnychatte{border-color:#00bcd4;background:rgba(0,188,212,.12);color:#00bcd4;}
+.cat-check.checked.cat-needcreampie{border-color:#ff5722;background:rgba(255,87,34,.12);color:#ff5722;}
+.cat-check.checked.cat-tightpussy{border-color:#e91e63;background:rgba(233,30,99,.12);color:#e91e63;}
+.cat-check.checked.cat-premium{border-color:#e6a817;background:rgba(230,168,23,.12);color:#e6a817;}
+.cat-check.checked.cat-juicypussy{border-color:#9c27b0;background:rgba(156,39,176,.12);color:#9c27b0;}
+.cat-check.checked.cat-sanno{border-color:#4caf50;background:rgba(76,175,80,.12);color:#4caf50;}
+.cat-check.checked.cat-maputte{border-color:#ff9800;background:rgba(255,152,0,.12);color:#ff9800;}
+.cat-check.checked.cat-wifey{border-color:#e91e63;background:rgba(233,30,99,.12);color:#e91e63;}
+.cat-check.checked.cat-nairobi{border-color:#27ae60;background:rgba(39,174,96,.12);color:#27ae60;}
+.cat-check.checked.cat-tokyo{border-color:#ff6b81;background:rgba(255,107,129,.12);color:#ff6b81;}
+.cat-check.checked.cat-toronto{border-color:#3498db;background:rgba(52,152,219,.12);color:#3498db;}
+.cat-check.checked.cat-nyc{border-color:#f1c40f;background:rgba(241,196,15,.15);color:#f1c40f;}
+.cat-check.checked.cat-calgary{border-color:#c0392b;background:rgba(192,57,43,.12);color:#c0392b;}
+.cat-check.checked.cat-lagos{border-color:#1abc9c;background:rgba(26,188,156,.12);color:#1abc9c;}
+.cat-check.checked.cat-montreal{border-color:#8e44ad;background:rgba(142,68,173,.12);color:#8e44ad;}
+.cat-check.checked.cat-dubai{border-color:#d4a853;background:rgba(212,168,83,.12);color:#d4a853;}
+.cat-check input{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}
+.loc-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:4px;}
+
+/* Card badges */
+.card-badges{position:absolute;top:6px;left:6px;display:flex;gap:4px;z-index:2;}
+.badge{padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.badge-fav{background:var(--accent);color:#000;}
+.badge-urgent{background:#e74c3c;color:#fff;}
+.badge-chichi{background:#e056a0;color:#fff;}
+.badge-nyash{background:#9b59b6;color:#fff;}
+.badge-creampie{background:#f39c12;color:#000;}
+.badge-skinnychatte{background:#00bcd4;color:#000;}
+.badge-needcreampie{background:#ff5722;color:#fff;}
+.badge-tightpussy{background:#e91e63;color:#fff;}
+.badge-premium{background:linear-gradient(135deg,#f5c842,#e6a817);color:#000;font-weight:700;}
+.badge-juicypussy{background:#9c27b0;color:#fff;}
+.badge-nairobi{background:#27ae60;color:#fff;}
+.badge-tokyo{background:#ff6b81;color:#fff;}
+.badge-toronto{background:#3498db;color:#fff;}
+.badge-nyc{background:#f1c40f;color:#000;}
+.badge-calgary{background:#c0392b;color:#fff;}
+.badge-lagos{background:#1abc9c;color:#fff;}
+.badge-montreal{background:#8e44ad;color:#fff;}
+.badge-dubai{background:#d4a853;color:#000;}
+
+/* Filter buttons for categories */
+.fbtn.on-urgent-f{background:#e74c3c;color:#fff;border-color:#e74c3c;}
+.fbtn.on-chichi-f{background:#e056a0;color:#fff;border-color:#e056a0;}
+.fbtn.on-nyash-f{background:#9b59b6;color:#fff;border-color:#9b59b6;}
+.fbtn.on-creampie-f{background:#f39c12;color:#000;border-color:#f39c12;}
+.fbtn.on-fav-f{background:var(--accent);color:#000;border-color:var(--accent);}
+
+.video-drop{border:2px dashed var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;margin-top:8px;}
+.video-drop:hover,.video-drop.dragover{border-color:var(--accent);background:var(--drop-bg);}
+.video-drop svg{width:24px;height:24px;stroke:var(--text3);fill:none;stroke-width:1.5;}
+.video-drop.dragover svg{stroke:var(--accent);}
+.video-drop-text{font-size:11px;color:var(--text3);}
+.video-drop-text b{color:var(--accent);cursor:pointer;}
+.vid-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px;}
+.vid-card video{width:100%;max-height:200px;display:block;background:#000;}
+.vid-card-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;}
+.vid-card-name{font-size:11px;color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.vid-card-del{background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;padding:2px 6px;}
+
+@media(max-width:760px){
+  .modal{grid-template-columns:1fr;max-width:100%;width:100%;border-radius:0;height:100vh;max-height:100vh;}
+  .modal-left{max-height:40vh;flex-shrink:0;}
+  .modal-right{flex:1;}
+  .filter-panel{padding:8px 16px;}
+  .fp-label{min-width:55px;font-size:9px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:14px 16px;}
+  header{padding:12px 16px 10px;}
+  .header-top{flex-direction:column;align-items:flex-start;}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo">KENYA ONNA <span>directory</span></div>
+    <div class="stats">
+      <span><b id="totalCount">536</b> contacts</span>
+      <span><b id="photoCount">398</b> photos</span>
+      <span><b id="showCount">536</b> shown</span>
+    </div>
+    <button class="add-btn" id="addNewBtn" title="Add new profile">+ New</button>
+  </div>
+  <div class="search-row">
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search name, phone, age, notes, tags...">
+    </div>
+    <div class="filters">
+      <button class="fbtn active" data-filter="all">All</button>
+      <button class="fbtn" data-filter="photo">Photo</button>
+      <button class="fbtn" data-filter="rated">Rated</button>
+      <button class="fbtn" data-filter="video">Video</button>
+    </div>
+    <select class="sort-sel" id="sortSelect">
+      <option value="idx">Sort: ID</option>
+      <option value="name">Sort: Name</option>
+      <option value="rating">Sort: Rating</option>
+      <option value="age">Sort: Age</option>
+    </select>
+  </div>
+  <div class="filter-panel" id="filterPanel">
+    <div class="fp-row">
+      <span class="fp-label">Segments</span>
+      <button class="fp-btn seg-btn" data-seg="fav">Favourites</button>
+      <button class="fp-btn seg-btn" data-seg="urgent">Urgent</button>
+      <button class="fp-btn seg-btn seg-chichi" data-seg="chichi">Chichi</button>
+      <button class="fp-btn seg-btn seg-nyash" data-seg="nyash">Nyash</button>
+      <button class="fp-btn seg-btn seg-creampie" data-seg="creampie">Cream Pie</button>
+      <button class="fp-btn seg-btn seg-skinnychatte" data-seg="skinnychatte">Skinny Chatte</button>
+      <button class="fp-btn seg-btn seg-needcreampie" data-seg="needcreampie">Need Cream Pie</button>
+      <button class="fp-btn seg-btn seg-tightpussy" data-seg="tightpussy">Tight Pussy</button>
+      <button class="fp-btn seg-btn seg-premium" data-seg="premium">Premium</button>
+      <button class="fp-btn seg-btn seg-juicypussy" data-seg="juicypussy">Juicy Pussy</button>
+      <button class="fp-btn seg-btn seg-sanno" data-seg="sanno">Sanno</button>
+      <button class="fp-btn seg-btn seg-maputte" data-seg="maputte">Ma Putte</button>
+      <button class="fp-btn seg-btn seg-wifey" data-seg="wifey">Wifey</button>
+    </div>
+    <div class="fp-row">
+      <span class="fp-label">Location</span>
+      <button class="fp-btn loc-btn loc-nairobi" data-loc="nairobi">Nairobi</button>
+      <button class="fp-btn loc-btn loc-tokyo" data-loc="tokyo">Tokyo</button>
+      <button class="fp-btn loc-btn loc-toronto" data-loc="toronto">Toronto</button>
+      <button class="fp-btn loc-btn loc-nyc" data-loc="nyc">NYC</button>
+      <button class="fp-btn loc-btn loc-calgary" data-loc="calgary">Calgary</button>
+      <button class="fp-btn loc-btn loc-lagos" data-loc="lagos">Lagos</button>
+      <button class="fp-btn loc-btn loc-montreal" data-loc="montreal">Montreal</button>
+      <button class="fp-btn loc-btn loc-dubai" data-loc="dubai">Dubai</button>
+    </div>
+    <div class="fp-row">
+      <span class="fp-label">Age</span>
+      <button class="fp-btn age-btn" data-age="18-22">18–22</button>
+      <button class="fp-btn age-btn" data-age="23-27">23–27</button>
+      <button class="fp-btn age-btn" data-age="28-32">28–32</button>
+      <button class="fp-btn age-btn" data-age="33-37">33–37</button>
+      <button class="fp-btn age-btn" data-age="38+">38+</button>
+    </div>
+  </div>
+</header>
+
+<div class="fav-strip" id="favStrip">
+  <div class="fav-strip-title">&#9733; Favourites</div>
+  <div class="fav-strip-inner">
+    <button class="fav-arrow fav-arrow-left" id="favLeft">&#8249;</button>
+    <div class="fav-scroll" id="favScroll"></div>
+    <button class="fav-arrow fav-arrow-right" id="favRight">&#8250;</button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- PROFILE MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">&times;</button>
+
+    <div class="modal-left">
+      <div class="carousel" id="carousel">
+        <img id="carouselImg" src="" alt="">
+        <div class="carousel-empty" id="carouselEmpty" style="display:none">&#9679;</div>
+        <button class="carousel-nav prev" id="carPrev">&#8249;</button>
+        <button class="carousel-nav next" id="carNext">&#8250;</button>
+        <div class="carousel-counter" id="carCounter"></div>
+        <div class="carousel-dots" id="carDots"></div>
+        <button class="set-profile-btn" id="setProfileBtn">Set as Profile</button>
+      </div>
+      <div class="upload-zone">
+        <div class="drop-area" id="dropArea">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <div class="drop-text">Drop photos here or <b id="browseBtn">browse file</b> · <b id="browseFolderBtn">import folder</b></div>
+          <input type="file" id="fileInput" accept="image/*,.heic,.heif" style="display:none">
+          <input type="file" id="folderInput" webkitdirectory accept="image/*,.heic,.heif" style="display:none">
+        </div>
+        <div class="thumb-row" id="thumbRow"></div>
+      </div>
+    </div>
+
+    <div class="modal-right">
+      <div class="profile-header">
+        <div class="profile-name" id="profileName"></div>
+        <div class="profile-sub">
+          <span id="profileIdx"></span>
+          <span id="profileAgeBadge" class="profile-age-badge" style="display:none"></span>
+        </div>
+      </div>
+
+      <div class="profile-rating">
+        <label>Rating</label>
+        <div class="star-row" id="starRow"></div>
+      </div>
+
+      <div class="toggle-row">
+        <button class="toggle-btn" id="toggleFav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          Favourite
+        </button>
+        <button class="toggle-btn" id="toggleUrgent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Urgent
+        </button>
+      </div>
+      <div class="cat-row">
+        <label class="cat-check" id="catChichi">
+          <input type="checkbox" id="checkChichi">
+          <span>Chichi</span>
+        </label>
+        <label class="cat-check cat-nyash" id="catNyash">
+          <input type="checkbox" id="checkNyash">
+          <span>Nyash</span>
+        </label>
+        <label class="cat-check cat-creampie" id="catCreampie">
+          <input type="checkbox" id="checkCreampie">
+          <span>Cream Pie</span>
+        </label>
+        <label class="cat-check cat-skinnychatte" id="catSkinnychatte">
+          <input type="checkbox" id="checkSkinnychatte">
+          <span>Skinny Chatte</span>
+        </label>
+        <label class="cat-check cat-needcreampie" id="catNeedcreampie">
+          <input type="checkbox" id="checkNeedcreampie">
+          <span>Need Cream Pie</span>
+        </label>
+        <label class="cat-check cat-tightpussy" id="catTightpussy">
+          <input type="checkbox" id="checkTightpussy">
+          <span>Tight Pussy</span>
+        </label>
+        <label class="cat-check cat-premium" id="catPremium">
+          <input type="checkbox" id="checkPremium">
+          <span>Premium</span>
+        </label>
+        <label class="cat-check cat-juicypussy" id="catJuicypussy">
+          <input type="checkbox" id="checkJuicypussy">
+          <span>Juicy Pussy</span>
+        </label>
+      </div>
+      <div class="loc-label">Location</div>
+      <div class="cat-row">
+        <label class="cat-check cat-nairobi" id="catNairobi">
+          <input type="checkbox" id="checkNairobi">
+          <span>Nairobi</span>
+        </label>
+        <label class="cat-check cat-tokyo" id="catTokyo">
+          <input type="checkbox" id="checkTokyo">
+          <span>Tokyo</span>
+        </label>
+        <label class="cat-check cat-toronto" id="catToronto">
+          <input type="checkbox" id="checkToronto">
+          <span>Toronto</span>
+        </label>
+        <label class="cat-check cat-nyc" id="catNyc">
+          <input type="checkbox" id="checkNyc">
+          <span>NYC</span>
+        </label>
+        <label class="cat-check cat-calgary" id="catCalgary">
+          <input type="checkbox" id="checkCalgary">
+          <span>Calgary</span>
+        </label>
+        <label class="cat-check cat-lagos" id="catLagos">
+          <input type="checkbox" id="checkLagos">
+          <span>Lagos</span>
+        </label>
+        <label class="cat-check cat-montreal" id="catMontreal">
+          <input type="checkbox" id="checkMontreal">
+          <span>Montreal</span>
+        </label>
+        <label class="cat-check cat-dubai" id="catDubai">
+          <input type="checkbox" id="checkDubai">
+          <span>Dubai</span>
+        </label>
+      </div>
+
+      <div class="field-row" style="display:flex;gap:8px;">
+        <div class="field-group" style="flex:1">
+          <div class="field-label">Phone 1</div>
+          <input class="field-input" id="fieldPhone" type="text">
+        </div>
+        <div class="field-group" style="flex:0 0 auto;display:flex;align-items:flex-end;gap:4px;padding-bottom:1px;">
+          <button class="wa-btn wa-msg" id="waMsg" style="padding:8px 10px;font-size:11px;gap:4px;" title="WhatsApp Message">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;min-width:16px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WA
+          </button>
+          <button class="wa-btn wa-call" id="waCall" style="padding:8px 10px;font-size:11px;gap:4px;" title="Call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px;min-width:16px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="field-row" style="display:flex;gap:8px;">
+        <div class="field-group" style="flex:1">
+          <div class="field-label">Phone 2</div>
+          <input class="field-input" id="fieldPhone2" type="text">
+        </div>
+        <div class="field-group" style="flex:0 0 auto;display:flex;align-items:flex-end;gap:4px;padding-bottom:1px;">
+          <button class="wa-btn wa-msg" id="waMsg2" style="padding:8px 10px;font-size:11px;gap:4px;" title="WhatsApp Message (Phone 2)">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;min-width:16px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WA
+          </button>
+          <button class="wa-btn wa-call" id="waCall2" style="padding:8px 10px;font-size:11px;gap:4px;" title="Call (Phone 2)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px;min-width:16px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <div class="field-label">Age</div>
+          <input class="field-input" id="fieldAge" type="text" placeholder="e.g. 26">
+        </div>
+        <div class="field-group"></div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Name</div>
+        <input class="field-input" id="fieldName" type="text">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Email</div>
+        <input class="field-input" id="fieldEmail" type="email" placeholder="email@example.com">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Work Place</div>
+        <input class="field-input" id="fieldWorkplace" type="text" placeholder="Company, bar, salon...">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Description</div>
+        <textarea class="field-input" id="fieldDescription" placeholder="Short description..." rows="2"></textarea>
+      </div>
+      <div class="cat-row" style="margin-top:4px;margin-bottom:10px;">
+        <label class="cat-check cat-sanno" id="catSanno">
+          <input type="checkbox" id="checkSanno">
+          <span>Sanno</span>
+        </label>
+        <label class="cat-check cat-maputte" id="catMaputte">
+          <input type="checkbox" id="checkMaputte">
+          <span>Ma Putte</span>
+        </label>
+        <label class="cat-check cat-wifey" id="catWifey">
+          <input type="checkbox" id="checkWifey">
+          <span>Wifey</span>
+        </label>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <div class="field-label">Tags / Location</div>
+          <input class="field-input" id="fieldTags" type="text" placeholder="K26, Westlands, VIP">
+        </div>
+        <div class="field-group">
+          <div class="field-label">Last Contacted</div>
+          <input class="field-input" id="fieldLastContact" type="date">
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Notes</div>
+        <textarea class="field-input" id="fieldNotes" placeholder="Personal notes..."></textarea>
+      </div>
+
+      <hr class="section-divider">
+      <div class="video-section">
+        <div class="field-label">Videos</div>
+        <div class="video-list" id="videoList"></div>
+        <div class="video-drop" id="videoDropArea">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <div class="video-drop-text">Drop videos here or <b id="videoBrowseBtn">browse files</b></div>
+          <input type="file" id="videoFileInput" multiple accept="video/*" style="display:none">
+        </div>
+      </div>
+
+      <button class="btn btn-save" id="saveBtn" style="width:100%">Save Changes</button>
+      <button class="btn btn-delete" id="deleteBtn" style="width:100%;display:none">Delete Contact</button>
+    </div>
+  </div>
+</div>
+
+<div class="zoom-overlay" id="zoomOverlay"><img id="zoomImg" src="" alt=""></div>
+
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">&#9888;</div>
+    <div class="confirm-title">Are you sure?</div>
+    <div class="confirm-msg">This will permanently delete <b id="confirmName"></b> and all their data.</div>
+    <div class="confirm-btns">
+      <button class="confirm-cancel" id="confirmCancel">Cancel</button>
+      <button class="confirm-yes" id="confirmYes">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CSV = `idx,full,phone,file
+1,Wairimu K2626AT,0797 083706,001_Wairimu_K2626AT.jpg
+2,Cynthia K26 Real Estate,+254 711 306378,
+3,Dante K26 Runner sprinter,0704 451613,
+4,Faith K26 Barber Western Delicacy,+254 718 044206,
+5,Fenny K26 Real Estate,+254 704 785895,
+6,Geoffrey K26 Bottler Marriott,+254 724 942011,
+7,Hudson K26 Manager Gemini,+254 794 747284,
+8,Hussain K26 Cap Town,+2348030631103,
+9,John K26 Gemini Bar,+254 717 164660,
+10,Joseph K26 Driver Uber,+254 723 257778,
+11,Lavender K26 Western Delicacy,+254 740 582553,
+12,Sabrina K26 Manager Monaco,+254 707 608598,
+13,Solome K26 Anita Chatte,+255 684 572 331,
+14,Abraham Alchemist K26,+254 701 516221,
+15,Achie K2634,+254 718 983706,015_Achie_K2634.jpg
+16,Adelight K2626,+254 742 381451,
+17,Adiana K2631,+254 705 43589,017_Adiana_K2631.jpg
+18,Adiana K2621,+254 726 767583,018_Adiana_K2621.jpg
+19,Aggy K2632,+254 732 083508,019_Aggy_K2632.jpg
+20,Agnes Chatte K2628,0797032529,020_Agnes_Chatte_K2628.jpg
+21,Agnes K26 Defonce,+254 718 628154,
+22,Ahmed Nassar K26,+233 50 244 7330,
+23,Aisha K2624 Defonce,+254 700 898551,023_Aisha_K2624_Defonce.jpg
+24,Albert Uber Flowers K26,+254 724 745986,
+25,Alesha K26 Taxi,+254 780 750266,
+26,Alexandria K2637A,+254716572483,026_Alexandria_K2637A.jpg
+27,Alexis Sourzac K26,+33 6 98 99 88 08,
+28,Alfa Congo Dubai K26,+243 906 107 772,
+29,Alice K2627,+254 710 570646,029_Alice_K2627.jpg
+30,Aliciah K2624AA,+254 764 181932,030_Aliciah_K2624AA.jpg
+31,Aliya K2624,+254 792 236807,031_Aliya_K2624.jpg
+32,Alma K2629,+254 704 606539,032_Alma_K2629.jpg
+33,Alpha Construction Nairobi K26,+254 728 888242,
+34,Amalia Mumbi K26,+254 719 305576,
+35,Amanda K2628 Cul Def,+254 707 691964,035_Amanda_K2628_Cul_Def.jpg
+36,Amani K2621no,+254718492728,036_Amani_K2621no.jpg
+37,Amara K2624,+254 703 844026,037_Amara_K2624.jpg
+38,Aminatu K26,+232 72 999685,038_Aminatu_K26.jpg
+39,Anangasa K2645,+254 721 515206,039_Anangasa_K2645.jpg
+40,Andrew Jw Marriott Hudson Resto K26,+254 726 379418,
+41,Aneti K2628,+254 746 546590,041_Aneti_K2628.jpg
+42,Angel K2644,+254 727 730125,042_Angel_K2644.jpg
+43,Angel K2626,+254 746 758686,043_Angel_K2626.jpg
+44,Angel Plotte K2634AA,+254 755 159556,044_Angel_Plotte_K2634AA.jpg
+45,Angela Ibiza K26,+2540707207644,
+46,Angela K2628,+254 114 194099,046_Angela_K2628.jpg
+47,Angie K2625,+254 743 513219,047_Angie_K2625.jpg
+48,Ann Courbes K2632,+254 718 748570,048_Ann_Courbes_K2632.jpg
+49,Ann K26 CJ,+254 111 801424,
+50,Ann K2624T,+254 794 295019,050_Ann_K2624T.jpg
+51,Ann K2634,+254 702 049383,051_Ann_K2634.jpg
+52,Ann K2640,+254 723 727313,052_Ann_K2640.jpg
+53,Anna K2627,+254 705 951644,053_Anna_K2627.jpg
+54,Annah K2632,+254 715 090278,054_Annah_K2632.jpg
+55,Annemarie K2624 AAAA,+255 793 338 318,055_Annemarie_K2624_AAAA.jpg
+56,Annet K2633,254701935219,056_Annet_K2633.jpg
+57,Anthony Agut Gemini K26,+254 712 329875,
+58,Anyanswa K2628,+254 718 245577,058_Anyanswa_K2628.jpg
+59,Atieno K2633,+254 712 244007,059_Atieno_K2633.jpg
+60,Audrey Addah K26,+254 701 308115,060_Audrey_Addah_K26.jpg
+61,Aurora K2623AA,+254 746 667340,061_Aurora_K2623AA.jpg
+62,Baddie K2622,+254 791 736774,062_Baddie_K2622.jpg
+63,Bambi K2625,+254 795 598453,063_Bambi_K2625.jpg
+64,Beatrice Ibiza K26,+254 111 637740,
+65,Beatrice Cleaning K26,+254 714 342121,
+66,Beay Baddie K2624,+254 712 408371,066_Beay_Baddie_K2624.jpg
+67,Becky K2622,+254 114 475309,067_Becky_K2622.jpg
+68,Becky K2622AA,+254 711 862993,068_Becky_K2622AA.jpg
+69,Belinda K2635,+254 711 818354,069_Belinda_K2635.jpg
+70,Benedetta K2622,+254 701 512863,
+71,Benny K2636,+254 729 277625,071_Benny_K2636.jpg
+72,Bet K2627A,+254 795 025820,072_Bet_K2627A.jpg
+73,Betty K2619AA,+254 798 351970,073_Betty_K2619AA.jpg
+74,Betty Kenya Immigration K26,+254 724 810834,
+75,Bianca K2628AAA,+254 742 708438,075_Bianca_K2628AAA.jpg
+76,Blessed K2627,+254 745 797493,076_Blessed_K2627.jpg
+77,Blessing Loice K2636,+254 114 203502,077_Blessing_Loice_K2636.jpg
+78,Brenda Brickford Cleaning K26,+254 718 115980,
+79,Brenda K2627,+254 740 770575,079_Brenda_K2627.jpg
+80,Briget Gemini K26,+254 708 620672,
+81,Buberry K2645,+254 722 809027,081_Buberry_K2645.jpg
+82,Candice K2635,+66 98 587 1861,082_Candice_K2635.jpg
+83,Candy K26,+254 707 817479,083_Candy_K26.jpg
+84,Carol K2625AAA,+254 799 013699,084_Carol_K2625AAA.jpg
+85,Carol2 K2627,+254 727 100885,085_Carol2_K2627.jpg
+86,Carole K2635AA,+254 716 959020,086_Carole_K2635AA.jpg
+87,Caroline K26 Uber,+254 728 407663,
+88,Caroline Rose K2628,+254 786 788978,088_Caroline_Rose_K2628.jpg
+89,Caroline K2630T,+254 101 062914,089_Caroline_K2630T.jpg
+90,Caroline 2 K2628,+254 725 913359,090_Caroline_2_K2628.jpg
+91,Carren K2624,+254 794 945658,091_Carren_K2624.jpg
+92,Carrie K2626,+254 788 476595,092_Carrie_K2626.jpg
+93,Carrie K26,+254 704 909701,093_Carrie_K26.jpg
+94,Cate K2638 Defonce,+254 718 076315,094_Cate_K2638_Defonce.jpg
+95,Catey K2627,+254 742 055768,095_Catey_K2627.jpg
+96,Cecy K2623,+254 745 441263,096_Cecy_K2623.jpg
+97,Celine K2621,0745 063680,097_Celine_K2621.jpg
+98,Cera K2628,+254 796 649310,098_Cera_K2628.jpg
+99,Cha K26 Elevator,+254 704 928021,
+100,Chebby K2633,+254 725 291857,100_Chebby_K2633.jpg
+101,Cherie K26 Ibiza,+254 724 839868,
+102,Chicalove K2624,+254 68 793565,102_Chicalove_K2624.jpg
+103,Chichi Ikama K26,+254 740 935383,
+104,Chichi K2621,+254 757 551489,104_Chichi_K2621.jpg
+105,Christine Plotte K2634,+254 701 789578,105_Christine_Plotte_K2634.jpg
+106,Christine K2638 Defonce,+254 799 637990,106_Christine_K2638_Defonce.jpg
+107,Ciana K2622,+254 769 414051,107_Ciana_K2622.jpg
+108,Cindy K26 Naivas,+254 718 671086,
+109,Cinke Houghton K26 Mcgill,+254 702 266448,
+110,Claire K2623,+254 700 513577,110_Claire_K2623.jpg
+111,Claire2 K2629,+254 715 197330,111_Claire2_K2629.jpg
+112,Clara K2625,+254 106 181425,112_Clara_K2625.jpg
+113,Coconut K2630,+254 718 248807,113_Coconut_K2630.jpg
+114,Connie K2632,+254 715 019727,114_Connie_K2632.jpg
+115,Consolata 2 K2629,+254 113 412622,115_Consolata_2_K2629.jpg
+116,Consolata K2621,+254 750 516105,116_Consolata_K2621.jpg
+117,Cyndy K26,+254719460330,117_Cyndy_K26.jpg
+118,Cynthia K2624,+254 745 495598,118_Cynthia_K2624.jpg
+119,Daisy K2625AAA,+254 724 914780,119_Daisy_K2625AAA.jpg
+120,Dan Le K26,0790 598016,
+121,Danniels K2622 AAA,+254 737 740308,121_Danniels_K2622_AAA.jpg
+122,Danys Uber K26,0722 326216,
+123,Danz Australia K26,+61 412 713 431,
+124,Daphine K2621,+254 758 688446,124_Daphine_K2621.jpg
+125,Dean K26 Florida,+254 141 944414,
+126,Dee K2625AAA,+284769841887,126_Dee_K2625AAA.jpg
+127,Dee K2626,+254 100 362857,127_Dee_K2626.jpg
+128,Delphine Brickford K26,+254 797 348112,
+129,Diana Classy K2628,+254 745 953727,129_Diana_Classy_K2628.jpg
+130,Diana K2621,+254 702 224707,130_Diana_K2621.jpg
+131,Diana K26,+254 726 525553,131_Diana_K26.jpg
+132,Diana Rwanda K26 Quiver,+254711747200,
+133,Dickson Driver K26,+254 710 235167,
+134,Dj Gemini K26,+284713865754,
+135,Doline K2631AA,+254 790 215349,135_Doline_K2631AA.jpg
+136,Donna K2632,+254 723 851682,136_Donna_K2632.jpg
+137,Doricah K2622,+254740413580,137_Doricah_K2622.jpg
+138,Doris K26 Ibiza,+254 718 784581,
+139,Drexxy K2623,+254 713 058966,139_Drexxy_K2623.jpg
+140,Edelqueen K2623,+254 791 677040,140_Edelqueen_K2623.jpg
+141,Elan K2622,+254 718 049885,141_Elan_K2622.jpg
+142,Eliza Giraf K2621,+211 923 989 872,142_Eliza_Giraf_K2621.jpg
+143,Eliza K2623,+254 729 680497,143_Eliza_K2623.jpg
+144,Elizabetha K2627,+254 115 743159,144_Elizabetha_K2627.jpg
+145,Ella K2625 AAAT,+254 746 168259,145_Ella_K2625_AAAT.jpg
+146,Elsy K2623,+254 118 287180,146_Elsy_K2623.jpg
+147,Elvis Mutekwa K26,+254714572552,
+148,Emily K2624AAA,+254799647762,
+149,Emma Brickford K26,+254 740 877370,
+150,Emmaline K2624,+254 111 819826,150_Emmaline_K2624.jpg
+151,Emmer K2627,+254 756 527159,151_Emmer_K2627.jpg
+152,Emmy K2630 Plotte,+254 797 977042,152_Emmy_K2630_Plotte.jpg
+153,Enjoy K26 Monaco,+254 702 142352,
+154,Essie K2625,+254 799 578166,154_Essie_K2625.jpg
+155,Essie2 K2622,0757468980,155_Essie2_K2622.jpg
+156,Essy K2625 Def,+254 792 341374,156_Essy_K2625_Def.jpg
+157,Essy K2624 AAAA,+254 719 209740,157_Essy_K2624_AAAA.jpg
+158,Essy K2620,+254 112 046115,158_Essy_K2620.jpg
+159,Esther K2624,+254 793 490906,159_Esther_K2624.jpg
+160,Esther K26uber,+254 713 804892,
+161,Esther K2626 AAA Thika,+254 793 403310,161_Esther_K2626_AAA_Thika.jpg
+162,Esther K2632AA,+254 723 207170,162_Esther_K2632AA.jpg
+163,Esther K2620?,+244792992129,163_Esther_K2620.jpg
+164,Eunita K2625AAAT,+254 798 586345,164_Eunita_K2625AAAT.jpg
+165,Eva Courbes K2628,+254 746 213245,165_Eva_Courbes_K2628.jpg
+166,Eva K26,+254713800940,166_Eva_K26.jpg
+167,Evelyne K26 Cleaning,+254 757 706915,
+168,Faidelle K2627,+254 797 194420,168_Faidelle_K2627.jpg
+169,Faith K2629,+254 706 838532,169_Faith_K2629.jpg
+170,Faith K2627,+254 115 874611,170_Faith_K2627.jpg
+171,Faith Quiver K26 Manager,+254 720 726805,
+172,Faizah K2621,0110 230496,172_Faizah_K2621.jpg
+173,Fel K2627,+254 740 664549,173_Fel_K2627.jpg
+174,Felister K26A,0796826909,174_Felister_K26A.jpg
+175,Flave K2623,+254 780 717699,175_Flave_K2623.jpg
+176,Florah Semen K2631,+254 718 079034,176_Florah_Semen_K2631.jpg
+177,Gee K2627,+254 105 310337,177_Gee_K2627.jpg
+178,Gee K2626,+254 742 010901,178_Gee_K2626.jpg
+179,Gee Light K2627,+254 757 724131,179_Gee_Light_K2627.jpg
+180,Getrude K26 Gbaby,+65718323849,180_Getrude_K26_Gbaby.jpg
+181,Gift K2622 T,+254 758 625873,181_Gift_K2622_T.jpg
+182,Gift K26,+254 757 068212,
+183,Gigi K2625,+254 794 935743,183_Gigi_K2625.jpg
+184,Gilo K2625 AAA G,+254 799 168640,184_Gilo_K2625_AAA_G.jpg
+185,Gina K26 Barber,+254 719 142480,
+186,Girl In Black Barber K26,+254 711 839505,
+187,Gladys K2626 AAA,+254 794 489782,187_Gladys_K2626_AAA.jpg
+188,Gloria K26,+254 713 208123,
+189,GODFREY K26 GEMINI,+254 722 363440,
+190,Habanah K2622,+254 712 428276,190_Habanah_K2622.jpg
+191,Hawa Nbo K26,+254 794 199810,
+192,Hazel K2627,+254 721 566616,192_Hazel_K2627.jpg
+193,Heleyner K2636,+255 759 175 868,193_Heleyner_K2636.jpg
+194,Herr K2630,+254 799 222067,194_Herr_K2630.jpg
+195,Ian K26 Kikimani,+254 795 959040,
+196,Ibiza Chatte K26,+254 742 272758,
+197,Immah Friends. k26,+254 787 108523,
+198,Immah K2621AAA,+254758135545,198_Immah_K2621AAA.jpg
+199,Isabella K2626,+254 758 565409,199_Isabella_K2626.jpg
+200,Isabelle Cleaning Brickford K26,+254 701 994287,
+201,Ivana K2622,+254 716 449352,201_Ivana_K2622.jpg
+202,Ivie K2622,+254 796 100133,202_Ivie_K2622.jpg
+203,Ivy C K2622A,+254 740 089484,203_Ivy_C_K2622A.jpg
+204,Ivy K2627AAA,+254 705 449930,204_Ivy_K2627AAA.jpg
+205,Ivy Njeri K26 Western,+254 708 755454,
+206,Ivy2 K2623,+254 796 657524,206_Ivy2_K2623.jpg
+207,Jacintha K26,+254 759 983989,207_Jacintha_K26.jpg
+208,Jackeline K2623,+254 793 799682,208_Jackeline_K2623.jpg
+209,Jada K2628,+254 797 740491,209_Jada_K2628.jpg
+210,JAMES K26 QUIVER,+254 724 466228,
+211,Jane Grace K26A,+254 728 723258,211_Jane_Grace_K26A.jpg
+212,Jane K2633,+254 742 685017,212_Jane_K2633.jpg
+213,Janet K2626,+254 746 350024,213_Janet_K2626.jpg
+214,Jayne K2620,+254 792 887835,214_Jayne_K2620.jpg
+215,Jb K26 London,+44 7927 325713,
+216,Jean K26 Congo,+254 720 635303,
+217,Jebby K2637,+254 733 858431,217_Jebby_K2637.jpg
+218,Jemmi K2623,+254 734 721316,218_Jemmi_K2623.jpg
+219,Jennifer K2628AAAA,+254 106 853713,219_Jennifer_K2628AAAA.jpg
+220,Jess K2625AAA,+254 718 543933,220_Jess_K2625AAA.jpg
+221,Jessskinny K2620,0790364441,221_Jessskinny_K2620.jpg
+222,Joan Cul K2635 M,+254 710 933522,222_Joan_Cul_K2635_M.jpg
+223,Joann K2623,+254 743 905533,223_Joann_K2623.jpg
+224,Joann Uganda K26 Quick,+254 704 734181,
+225,Jolene K2624,+254794960759,225_Jolene_K2624.jpg
+226,Josephine K26,+254 721 737755,226_Josephine_K26.jpg
+227,Joy Gemini K26,+254 706 833949,
+228,Joy K2629,+254 759 807946,228_Joy_K2629.jpg
+229,Joy K2625AAA,+254 745 395847,229_Joy_K2625AAA.jpg
+230,Joy Quiver K26,+254 706 639598,
+231,Joy3 K2635,+254 112 868791,231_Joy3_K2635.jpg
+232,Joyce K26AAA,+254759923943,232_Joyce_K26AAA.jpg
+233,JoyChatte K2622,+254 140 571004,233_JoyChatte_K2622.jpg
+234,Joymilf K2640,+254 708 006177,234_Joymilf_K2640.jpg
+235,Jrocks K2633,+254 707 939883,235_Jrocks_K2633.jpg
+236,Juddy K2619,0117593012,236_Juddy_K2619.jpg
+237,Judith K26 Gemini,0706 143879,
+238,Judy K2650,+254 722 351525,238_Judy_K2650.jpg
+239,Juma Nsk K26 Security,0707 212871,
+240,Karry K2626,+254 746 763430,240_Karry_K2626.jpg
+241,Kate K2645,+254726635058,241_Kate_K2645.jpg
+242,Kathlyn K26,+254 726 693283,242_Kathlyn_K26.jpg
+243,Katie Shell K26,+254 703 588043,
+244,Kelly Ibiza K26,+254754868945,
+245,Kelly K2639,0723 781729,245_Kelly_K2639.jpg
+246,Ken Driver Uber K26,+254 724 642870,
+247,Kennedy K26 Gemini,+254 758 491233,
+248,Kennedy K26 Quiver,+254 715 157912,
+249,Keril K2627,+254 782 871507,249_Keril_K2627.jpg
+250,Kerry K2628 Defonce,+254 741 638568,250_Kerry_K2628_Defonce.jpg
+251,KERUBO K26,+254 741 130981,
+252,Keysha Jacky K2630,+254 708 236271,252_Keysha_Jacky_K2630.jpg
+253,Khadija K2627,+254 758 688362,253_Khadija_K2627.jpg
+254,Khoi K2623,+254 741 362901,254_Khoi_K2623.jpg
+255,Kimberly K2625,+254 706 041911,255_Kimberly_K2625.jpg
+256,Kish K2625 Defonce,+254 715 779840,256_Kish_K2625_Defonce.jpg
+257,Krissy K2626,0748 986767,257_Krissy_K2626.jpg
+258,Kristie K2629,+254 769 001656,258_Kristie_K2629.jpg
+259,Larry Nigeria K26,+234 906 988 4912,
+260,Lassie K2625,+254 704 845789,260_Lassie_K2625.jpg
+261,Latifah K2623,+254 703 693292,261_Latifah_K2623.jpg
+262,Laura K2629,+254 115 439931,262_Laura_K2629.jpg
+263,Laura K26,+254 705 521166,263_Laura_K26.jpg
+264,Laura Lp K26,+254713786635,
+265,Leha K2623,+254 701 104069,265_Leha_K2623.jpg
+266,Liban Uber K26,(647) 819-7808,
+267,Lii K2623,+254 758 237176,267_Lii_K2623.jpg
+268,Lilian Arbnb Gatundu K26,+254 708 832443,
+269,Lilian K2627,+254 142 757838,269_Lilian_K2627.jpg
+270,Lily K2622,+254 745 900268,270_Lily_K2622.jpg
+271,Lionah K2623,+254 769 249391,271_Lionah_K2623.jpg
+272,Liquor Junction K26 Nairobi,+254 112 422456,
+273,Lisa K2625,+254 788 537101,273_Lisa_K2625.jpg
+274,Lisa K2626,+254 745 372126,274_Lisa_K2626.jpg
+275,Lisa T K2635,+254 706 024369,275_Lisa_T_K2635.jpg
+276,Liyah K2625A,+254 797 991020,276_Liyah_K2625A.jpg
+277,Lizzy Poupee K2627AA,+254 727 782500,277_Lizzy_Poupee_K2627AA.jpg
+278,Lotus K2626T,0105 863371,278_Lotus_K2626T.jpg
+279,Luciana K2627,+254 799 582267,279_Luciana_K2627.jpg
+280,Lucy K2626AA,+254 710 440884,280_Lucy_K2626AA.jpg
+281,Lucy K26 Gatundu,+254 729 625831,
+282,Luna K26AAA,+254 104 732418,282_Luna_K26AAA.jpg
+283,Lynn K2621,+254 759 485504,283_Lynn_K2621.jpg
+284,Lynne K2629,+254 758 909776,284_Lynne_K2629.jpg
+285,Magdaline K2627,+254 736 300582,285_Magdaline_K2627.jpg
+286,Maggie K2622,+254 732 044548,286_Maggie_K2622.jpg
+287,Makena K2623AAA,+254 111 795734,287_Makena_K2623AAA.jpg
+288,Malayinka K2622,+254 719 157729,288_Malayinka_K2622.jpg
+289,Maliya K2626A,+254 707 719399,289_Maliya_K2626A.jpg
+290,Malyama K2626 Jambes,+254 707 545039,290_Malyama_K2626_Jambes.jpg
+291,Manager Gemini k26,+254 722 595464,
+292,Mao Lawyer Nairobi K26,+254 722 830431,
+293,Maria Butt K2630,+254 726 893727,293_Maria_Butt_K2630.jpg
+294,Maria Courbe K2627AAA,0700 594553,294_Maria_Courbe_K2627AAA.jpg
+295,Maria K2622,+254 742 829717,295_Maria_K2622.jpg
+296,Marie Chatte K2627,+254 707 320730,296_Marie_Chatte_K2627.jpg
+297,Marie Creamp K2624,+254 114 332030,297_Marie_Creamp_K2624.jpg
+298,Marie K2624,+254 142 407792,298_Marie_K2624.jpg
+299,Marina K2631AA,+254 703 533840,299_Marina_K2631AA.jpg
+300,Mariya K2631 Tapp,+254 723 981674,300_Mariya_K2631_Tapp.jpg
+301,Martha K2637,+254 707 663496,301_Martha_K2637.jpg
+302,Marvelin K2623,+254 701 617227,302_Marvelin_K2623.jpg
+303,Mary K2624 Gap,+254 752 474678,303_Mary_K2624_Gap.jpg
+304,Mary A K2624AAA,+2547084222651,304_Mary_A_K2624AAA.jpg
+305,Mary Butt K2627,+232 72 567195,305_Mary_Butt_K2627.jpg
+306,Mary K2637,+254 725 364598,306_Mary_K2637.jpg
+307,Mary K2632T,+254 727 441834,307_Mary_K2632T.jpg
+308,Mary Maigre K2625,+254 115 031165,308_Mary_Maigre_K2625.jpg
+309,Maryanne K26-,+254 112 109337,309_Maryanne_K26.jpg
+310,Maryner K2626,+254 791 156869,310_Maryner_K2626.jpg
+311,Marysalome K2636,+254 721 786694,311_Marysalome_K2636.jpg
+312,Matilda K2626,+254 799 310731,312_Matilda_K2626.jpg
+313,Matunda K2630,+254 721 984050,313_Matunda_K2630.jpg
+314,Maureen K2630,+254 705 811887,314_Maureen_K2630.jpg
+315,Maya K26,0716604292,315_Maya_K26.jpg
+316,Mayvell K26 Nigeria,+234 809 484 2210,
+317,Meg Plotte K2624,+254 112 152241,317_Meg_Plotte_K2624.jpg
+318,Meg T K2625,0746999027,318_Meg_T_K2625.jpg
+319,Megjulie K2624,+254 718 100334,319_Megjulie_K2624.jpg
+320,Melania K2629,+254 780 318781,320_Melania_K2629.jpg
+321,Melisa B K2630A,+254 737 619274,321_Melisa_B_K2630A.jpg
+322,Melisa K2629A,254748707446,322_Melisa_K2629A.jpg
+323,Melissa K2626,+2540705159001,323_Melissa_K2626.jpg
+324,Melissa K2619,+254 117 183807,324_Melissa_K2619.jpg
+325,Melissa K2627,+254 700 812355,325_Melissa_K2627.jpg
+326,Melyssa K2624,+254 793 954858,326_Melyssa_K2624.jpg
+327,Mercy Hamba K2640 Def,+254 727 175207,327_Mercy_Hamba_K2640_Def.jpg
+328,Mercy K2620,+254 101 908851,328_Mercy_K2620.jpg
+329,Mercy K2642,+254 717 640331,329_Mercy_K2642.jpg
+330,Mercy K2620 AAA,+254 726 831257,330_Mercy_K2620_AAA.jpg
+331,Meriana K26,+254 108 677564,331_Meriana_K26.jpg
+332,Michelle K26 Store,+254 780 833867,
+333,Michelle K2620,+254 745 807930,333_Michelle_K2620.jpg
+334,Micky Rwanda K26,+250 780 377 939,
+335,Millie kigen Cherrie K26A,+254113268494,335_Millie_kigen_Cherrie_K26A.jpg
+336,Mimi K2625AAA,+254 741 288666,336_Mimi_K2625AAA.jpg
+337,Mimi K2623,+254 768 301135,337_Mimi_K2623.jpg
+338,Mina K2623A,+254 707 439266,338_Mina_K2623A.jpg
+339,Mish K2628,0719727212,339_Mish_K2628.jpg
+340,Miss K2626 AA,+254 702 348637,340_Miss_K2626_AA.jpg
+341,Missy K2627,+254 711 625262,341_Missy_K2627.jpg
+342,Missy K2630,+254 724 634356,342_Missy_K2630.jpg
+343,Mitch K2635,+254 714 817714,343_Mitch_K2635.jpg
+344,Molly K26,+254 742 625510,
+345,Monicah K2622,254103110332,345_Monicah_K2622.jpg
+346,Moniqah K2627,+254 722 110579,346_Moniqah_K2627.jpg
+347,Montes K2619AA,+254729020989,347_Montes_K2619AA.jpg
+348,Mourine K2628A,+254 746 800385,348_Mourine_K2628A.jpg
+349,Mukiza K26,+254 702 973350,
+350,Mwende K2625,+254 702 403070,350_Mwende_K2625.jpg
+351,Myriam K26 Gemini,+254 768 307496,
+352,Myriam Western Delicacy K26,+254 140 809582,
+353,Naila K2627,+254 743 661990,353_Naila_K2627.jpg
+354,Naipanoi K2628,+254 711 632330,354_Naipanoi_K2628.jpg
+355,Nana K2627A,+254716009159,355_Nana_K2627A.jpg
+356,Nancy K2629,+254 797 921028,356_Nancy_K2629.jpg
+357,Naomi Butt K26,+254746122617,357_Naomi_Butt_K26.jpg
+358,Narhalia K2621,+254 710 430475,358_Narhalia_K2621.jpg
+359,Nasra K2623,+254 721 879174,359_Nasra_K2623.jpg
+360,Natalie K2622,0711260730,360_Natalie_K2622.jpg
+361,Nathalia K2624,+254 103 912480,361_Nathalia_K2624.jpg
+362,Nathalie K2628,+254 722 907215,362_Nathalie_K2628.jpg
+363,Nay K2637A,+254 722 732536,363_Nay_K2637A.jpg
+364,Nel K2637,0792221450,364_Nel_K2637.jpg
+365,Nelly K2625AAA,+254 741 614636,365_Nelly_K2625AAA.jpg
+366,Nelsy K26,254743600145,366_Nelsy_K26.jpg
+367,Ness K2626,+254 708 794496,367_Ness_K2626.jpg
+368,Ngor London K26,+44 7861 872895,
+369,Nicah K2627,+254 754 699667,369_Nicah_K2627.jpg
+370,Nicah K2625,+254 114 407285,370_Nicah_K2625.jpg
+371,Nice K2629,+974 5074 8664,371_Nice_K2629.jpg
+372,Niki K2621,+254 716 326897,372_Niki_K2621.jpg
+373,Nikkynight K26,+254 712 048040,
+374,Nimo K2622,+254 758 744057,374_Nimo_K2622.jpg
+375,Nina K2632,+254 757 182777,375_Nina_K2632.jpg
+376,Nina K2622,+254 142 311952,376_Nina_K2622.jpg
+377,Nini K2621A,+254 704 758432,377_Nini_K2621A.jpg
+378,Noami K26,+254 745 977973,378_Noami_K26.jpg
+379,Norah K26 Gemini,+254 797 524457,
+380,Nyams K2627,+254 714 136390,380_Nyams_K2627.jpg
+381,Olpher K2625A,+254 794 328770,381_Olpher_K2625A.jpg
+382,Omondi BnB n Car Hire K26,0796 137637,
+383,Ophy Uk K26,0714 901803,
+384,Patrick Uber Kilimani K26,+254 723 645664,
+385,Patty Courbe K2633 AAA,+254 784 106744,385_Patty_Courbe_K2633_AAA.jpg
+386,Peace Nadine K26,+250 790 634 744,
+387,Perfect Ivory COAST K26,+254 703 315546,
+388,Perry K2623AAA Cul,+254 791 031566,388_Perry_K2623AAA_Cul.jpg
+389,Petit Bebe K2628,+254 700 391127,389_Petit_Bebe_K2628.jpg
+390,Petra K2623,+254 113 971030,390_Petra_K2623.jpg
+391,Petra K2631,+254 723 838552,391_Petra_K2631.jpg
+392,Pette K2623,+254 742 418050,392_Pette_K2623.jpg
+393,Phil Seattle K26,2069543348,
+394,Phiona K26 Gimini,+254 112 189958,
+395,Phoebe K2625,+254 743 087666,395_Phoebe_K2625.jpg
+396,Pixxy Vider K2626 AAA,+254 702 455653,396_Pixxy_Vider_K2626_AAA.jpg
+397,Polly K2626,+254 705 702559,397_Polly_K2626.jpg
+398,Polycarp Ciel Club K26,+254 112 350759,
+399,Praise K2620 AAAA,+254 786 415005,399_Praise_K2620_AAAA.jpg
+400,Precious BJ K2623,+254 794 269377,400_Precious_BJ_K2623.jpg
+401,Pretty K2632,+254 795 827656,401_Pretty_K2632.jpg
+402,Princess K2625,+254 746 123392,402_Princess_K2625.jpg
+403,Purity K2625,0722124828,403_Purity_K2625.jpg
+404,Purity K2628,+254 792 513068,404_Purity_K2628.jpg
+405,Purity2 K2629,+254 726 522592,405_Purity2_K2629.jpg
+406,Quincy K2621,+254 114 629997,406_Quincy_K2621.jpg
+407,Ra Da Gemini K26,+254 743 123673,
+408,Rachael K26,+254 785 063271,408_Rachael_K26.jpg
+409,Rachael Sagret Hotel K2624,+254 792 305792,
+410,Rachelle K26,+254 708 308319,
+411,Rael K26 Defonce,+254 769 591094,
+412,Raise K2621,+254 736 751532,412_Raise_K2621.jpg
+413,Rebecca K2629,+254 743 215448,413_Rebecca_K2629.jpg
+414,Renee K2627,+254 790 503251,414_Renee_K2627.jpg
+415,Ressy K2623,0793787144,415_Ressy_K2623.jpg
+416,Riane K2622,+254 714 711280,416_Riane_K2622.jpg
+417,Rise K2633,+254 725 375097,417_Rise_K2633.jpg
+418,Rita K2625 AAA,+254 727 654047,418_Rita_K2625_AAA.jpg
+419,Ritah K2622A,+254 114 304615,419_Ritah_K2622A.jpg
+420,Rose K2619AAA Vider,+254 753 996468,420_Rose_K2619AAA_Vider.jpg
+421,Rose K2627AAA,+254 701 995680,421_Rose_K2627AAA.jpg
+422,Rose Marie K2624,+254 705 584254,
+423,Rose Massage Western Delicacy K26,+254 705 057602,
+424,Rosemary K2636,+254 724 913219,424_Rosemary_K2636.jpg
+425,Rozzah K2635AAA,+254 726 813542,425_Rozzah_K2635AAA.jpg
+426,Ruthie K26,+254 724 652802,426_Ruthie_K26.jpg
+427,Sally K2632 AA,+254 729 616527,427_Sally_K2632_AA.jpg
+428,Sam K26,0720 829302,
+429,Samya K2628,+254 718 569400,429_Samya_K2628.jpg
+430,Sanaah K2625,+2540143160399,430_Sanaah_K2625.jpg
+431,Sandra Babie K2623 AAA,+255 689 606 027,431_Sandra_Babie_K2623_AAA.jpg
+432,Sandy K2624,+254 112 303498,432_Sandy_K2624.jpg
+433,Sanirah K2619AA,+254 769 012114,433_Sanirah_K2619AA.jpg
+434,Sans K2622,0735743199,434_Sans_K2622.jpg
+435,Sara K2627,+254 716 949297,435_Sara_K2627.jpg
+436,Sarah 2 K2626,+254 719 192402,436_Sarah_2_K2626.jpg
+437,Sarah K26B,+254 756 962953,437_Sarah_K26B.jpg
+438,Sarah K2629T,+254 723 381160,438_Sarah_K2629T.jpg
+439,Sasha K2625 Defonce,+254 100 521499,439_Sasha_K2625_Defonce.jpg
+440,Sasha K2625B,254759228349,440_Sasha_K2625B.jpg
+441,Sasha Poupee K2620A,+254 791 222596,441_Sasha_Poupee_K2620A.jpg
+442,Sassy K2625,0742 369691,442_Sassy_K2625.jpg
+443,Sassy K2627,+254 740 869084,443_Sassy_K2627.jpg
+444,Sereti Brickford K26,+254 725 337035,
+445,Serge Rdc K26,+254 703 864644,
+446,Shaly K2622,+254 707 425468,446_Shaly_K2622.jpg
+447,Shan bj K2623,+254 759 156251,447_Shan_bj_K2623.jpg
+448,Shanelle K26,+254 110 233302,
+449,Shanice K26,0704 267588,
+450,Sharline K2625,+254771242690,450_Sharline_K2625.jpg
+451,Shazia K2625,+254 793 583656,451_Shazia_K2625.jpg
+452,Shee K2628,+254 757 583784,452_Shee_K2628.jpg
+453,Sheila Cleaning K26 Brickford,+254 704 738656,
+454,Sheila K2625 Gemini,+254 708 813060,
+455,Sherly K2628,+254 722 136257,455_Sherly_K2628.jpg
+456,Shey K2628,+254 114 739309,456_Shey_K2628.jpg
+457,Shirley K2620,+254 715 350855,457_Shirley_K2620.jpg
+458,Shsron K2634,+254 711 274785,458_Shsron_K2634.jpg
+459,Simbiat K26 Negiria,+254 745 831257,
+460,Simon Ciel K26,+254 796 770838,
+461,Skylah K2624,+254 799 051836,461_Skylah_K2624.jpg
+462,Sly K2623 QD,+254 705 991362,462_Sly_K2623_QD.jpg
+463,Soli JW K26,+254740387979,
+464,Solidarity K26 Forever,+254 748 820799,
+465,Sonnie K2629,+254 716 511367,465_Sonnie_K2629.jpg
+466,Sonnie K2627,+254 715 566217,466_Sonnie_K2627.jpg
+467,Soudah K2629A,+254 793 817931,467_Soudah_K2629A.jpg
+468,Stacey Brick K26,+254 105 812256,
+469,Stacey K2623AAA,+2540115890694,469_Stacey_K2623AAA.jpg
+470,Stacy K2623,+254 797 632123,470_Stacy_K2623.jpg
+471,Stacy Pretty K26,+254 712 732338,
+472,Star K2630A,+254 726 044639,472_Star_K2630A.jpg
+473,Stellah K26,+254 722 493891,473_Stellah_K26.jpg
+474,Stellah2 K2630,+254 723 172103,474_Stellah2_K2630.jpg
+475,Stelz K2622,+254 794 147706,475_Stelz_K2622.jpg
+476,Steve K26 Lending,+284799324533,
+477,Sue K2625,+254 762 238933,477_Sue_K2625.jpg
+478,Summer K2627,0717 482155,478_Summer_K2627.jpg
+479,Sunmer K2625 AAA,+254 741 939624,479_Sunmer_K2625_AAA.jpg
+480,Suzie K2622,+254 792 551289,480_Suzie_K2622.jpg
+481,Sylvia K2626,+254 716 374324,481_Sylvia_K2626.jpg
+482,Sysy K2624,+254 706 353221,482_Sysy_K2624.jpg
+483,Tammy K2623,+254 104 625124,483_Tammy_K2623.jpg
+484,Tasah K2622,+254 702 007016,484_Tasah_K2622.jpg
+485,TasahBJ K2622,254716130561,485_TasahBJ_K2622.jpg
+486,Tasha K2627,+254 713 666952,486_Tasha_K2627.jpg
+487,Tasha K2630,+254 791 492290,487_Tasha_K2630.jpg
+488,Tatianna K26 Gemini,+254 748 632923,
+489,Temmy Negiria K26 Immigration,+254 756 510417,
+490,Temmy Wondergirl Nigeria K26,+234 814 586 2108,
+491,Terry 2 K2623,+254 114 249244,491_Terry_2_K2623.jpg
+492,Terry K2623T,+254 728 649708,492_Terry_K2623T.jpg
+493,Tiana K2620,+254 111 593269,493_Tiana_K2620.jpg
+494,Tiannah K2625,0710 581498,494_Tiannah_K2625.jpg
+495,Tiff K2629,+254 701 225159,495_Tiff_K2629.jpg
+496,Tiffany K2623,+254 794 093562,496_Tiffany_K2623.jpg
+497,Timotty Uber K26,+254 723 161948,
+498,Tina K2625,0700 127267,498_Tina_K2625.jpg
+499,Tinah K2626A,+254 746 593924,499_Tinah_K2626A.jpg
+500,Tinan K2627 AA,+254 790 206378,500_Tinan_K2627_AA.jpg
+501,Toronto Guy Nairobi K26,+1 647-779-8197,
+502,Tottie K2623,+254 797 336879,502_Tottie_K2623.jpg
+503,Toulope K2628AAA,+254 116 595620,503_Toulope_K2628AAA.jpg
+504,Tracy B K26 Ciel,+254 712 09942,
+505,Tracy K2626,+254747585600,505_Tracy_K2626.jpg
+506,Treasure K2628,+254 716 436988,506_Treasure_K2628.jpg
+507,Tricia K2622,+254111342563,507_Tricia_K2622.jpg
+508,Umshit K26,0708981811,
+509,Valinda Money Penny K26,+254 711 418638,
+510,Vallary K26,+254 759 390920,
+511,Vanessa Rose Bonne K26 Gold,+254 797 560235,
+512,Vee Chatte K2625 AA,+254 741 378391,512_Vee_Chatte_K2625_AA.jpg
+513,Vee K2629,+254 741 524606,513_Vee_K2629.jpg
+514,Veronica Kimaiyo K26,+254 727 062356,
+515,Veronica K2628AAA,+254 705 633677,515_Veronica_K2628AAA.jpg
+516,Violet K2628,+254 701 444859,516_Violet_K2628.jpg
+517,Virgo K2629,+254 712 242616,517_Virgo_K2629.jpg
+518,Vivian Butt K2628,0711565980,518_Vivian_Butt_K2628.jpg
+519,Vivian K26 Nixa,+254 757 293472,
+520,Vivian K2625,+254 799 259518,520_Vivian_K2625.jpg
+521,Wahu K2621,+254 788 608268,521_Wahu_K2621.jpg
+522,Wangui K2618,0117533554,522_Wangui_K2618.jpg
+523,Wangui K2626,+254 742 011649,523_Wangui_K2626.jpg
+524,Wendy K2626,+254 723 805063,524_Wendy_K2626.jpg
+525,Winnie Defonce K2631,+254 722 544198,525_Winnie_Defonce_K2631.jpg
+526,Winnie K2624A,+254 793 608417,526_Winnie_K2624A.jpg
+527,Witheney K2636,+254 746 660193,527_Witheney_K2636.jpg
+528,Xemi K26AA,+254 705 177898,528_Xemi_K26AA.jpg
+529,Yvonne K2623,+254 716 467720,529_Yvonne_K2623.jpg
+530,Zack London K26,+44 7379 249722,
+531,Zara K2623 AAA,+254 719 182324,531_Zara_K2623_AAA.jpg
+532,Zee K2626,+254 795 886638,532_Zee_K2626.jpg
+533,Zila K2624,+254 768 391598,533_Zila_K2624.jpg
+534,Zipporah K2633,+254 722 357084,534_Zipporah_K2633.jpg
+535,Zippy K2628,+254 798 839958,535_Zippy_K2628.jpg
+536,Zyzy K2623,+254 769 233313,536_Zyzy_K2623.jpg`;
+
+function parseAge(name) {
+  const m = name.match(/K26(\d{2})/i);
+  if (!m) return null;
+  const a = parseInt(m[1]);
+  return (a >= 15 && a <= 65) ? a : null;
+}
+
+function parseCSV(raw) {
+  const lines = raw.trim().split('\n');
+  const out = [];
+  for (let i = 1; i < lines.length; i++) {
+    const parts = lines[i].split(',');
+    const idx = parseInt(parts[0]);
+    const full = parts[1].trim();
+    const lastPart = parts[parts.length-1].trim();
+    const hasFile = lastPart.endsWith('.jpg');
+    const file = hasFile ? lastPart : null;
+    const phoneEnd = hasFile ? parts.length - 1 : parts.length;
+    const phone = parts.slice(2, phoneEnd).join(',').replace(/^["*]+|["*]+$/g,'').trim();
+    const age = parseAge(full);
+    out.push({ idx, full, phone, file, age });
+  }
+  return out;
+}
+
+const contacts = parseCSV(CSV);
+
+// Deleted contacts (CSV ones that were removed)
+const DK = 'kenya_onna_deleted';
+function loadDeleted() { try { return JSON.parse(localStorage.getItem(DK)) || []; } catch(e) { return []; } }
+function saveDeleted(arr) { try { localStorage.setItem(DK, JSON.stringify(arr)); } catch(e) {} }
+const deletedSet = new Set(loadDeleted());
+if (deletedSet.size) {
+  for (let i = contacts.length - 1; i >= 0; i--) {
+    if (deletedSet.has(contacts[i].idx)) contacts.splice(i, 1);
+  }
+}
+
+// Restore custom (user-added) contacts
+const CK = 'kenya_onna_custom';
+function loadCustom() { try { return JSON.parse(localStorage.getItem(CK)) || []; } catch(e) { return []; } }
+function saveCustom() { try { localStorage.setItem(CK, JSON.stringify(contacts.filter(c => c.custom))); } catch(e) {} }
+loadCustom().forEach(c => { c.custom = true; contacts.push(c); });
+
+// localStorage for user data
+const SK = 'kenya_onna_v2';
+let ud = {};
+try { ud = JSON.parse(localStorage.getItem(SK)) || {}; } catch(e) { ud = {}; }
+function save() { try { localStorage.setItem(SK, JSON.stringify(ud)); } catch(e) {} }
+function g(idx) { return ud[idx] || {}; }
+function s(idx, d) { ud[idx] = { ...g(idx), ...d }; save(); }
+
+// IndexedDB for uploaded photos
+let photoDB = null;
+let dbReady = new Promise((resolve) => {
+  try {
+    const dbReq = indexedDB.open('kenya_onna_media', 2);
+    dbReq.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('photos')) db.createObjectStore('photos');
+      if (!db.objectStoreNames.contains('videos')) db.createObjectStore('videos');
+    };
+    dbReq.onsuccess = e => { photoDB = e.target.result; resolve(true); };
+    dbReq.onerror = () => { console.error('IndexedDB failed to open'); resolve(false); };
+    dbReq.onblocked = () => { console.error('IndexedDB blocked'); resolve(false); };
+  } catch(e) { console.error('IndexedDB not available:', e); resolve(false); }
+});
+
+async function savePhoto(key, dataUrl) {
+  const ok = await dbReady;
+  if (!ok || !photoDB) throw new Error('Database not available');
+  return new Promise((res, rej) => {
+    const tx = photoDB.transaction('photos','readwrite');
+    tx.objectStore('photos').put(dataUrl, key);
+    tx.oncomplete = () => res();
+    tx.onerror = e => rej(e);
+  });
+}
+async function loadPhotos(keys) {
+  if (!keys.length) return [];
+  await dbReady;
+  return new Promise((res) => {
+    const tx = photoDB.transaction('photos','readonly');
+    const store = tx.objectStore('photos');
+    const results = [];
+    let done = 0;
+    keys.forEach((k,i) => {
+      const r = store.get(k);
+      r.onsuccess = () => { results[i] = r.result || null; done++; if(done===keys.length) res(results); };
+      r.onerror = () => { results[i] = null; done++; if(done===keys.length) res(results); };
+    });
+  });
+}
+async function deletePhoto(key) {
+  await dbReady;
+  return new Promise(res => {
+    const tx = photoDB.transaction('photos','readwrite');
+    tx.objectStore('photos').delete(key);
+    tx.oncomplete = () => res();
+  });
+}
+
+function starSVG(f) {
+  return `<svg viewBox="0 0 24 24" fill="${f?'var(--star)':'none'}" stroke="var(--star)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+}
+
+function dn(c) { return g(c.idx).name || c.full; }
+function dp(c) { return g(c.idx).phone || c.phone; }
+function dp2(c) { return g(c.idx).phone2 || ''; }
+function da(c) { const ov = g(c.idx).age; return ov != null ? ov : c.age; }
+function dr(c) { return g(c.idx).rating || 0; }
+function dv(c) { return g(c.idx).uploadedVideos || []; }
+function uploadedKeys(c) { return g(c.idx).uploadedPhotos || []; }
+
+function formatWaNum(raw) {
+  let p = raw.replace(/[\s\-\(\)\*"]/g, '');
+  if (p.startsWith('0')) p = '254' + p.slice(1);
+  p = p.replace(/^\+/, '');
+  return p;
+}
+function getWaNumber(c) { return formatWaNum(dp(c)); }
+
+let filter = 'all', sort = 'idx', search = '';
+const activeSegs = new Set();
+const activeLocs = new Set();
+const activeAges = new Set();
+
+function ageInGroup(age, group) {
+  if (!age) return false;
+  if (group === '18-22') return age >= 18 && age <= 22;
+  if (group === '23-27') return age >= 23 && age <= 27;
+  if (group === '28-32') return age >= 28 && age <= 32;
+  if (group === '33-37') return age >= 33 && age <= 37;
+  if (group === '38+') return age >= 38;
+  return false;
+}
+
+function getList() {
+  let list = contacts.slice();
+  if (search) {
+    const q = search.toLowerCase();
+    list = list.filter(c => {
+      const age = da(c);
+      return dn(c).toLowerCase().includes(q)
+        || dp(c).toLowerCase().includes(q)
+        || (g(c.idx).notes||'').toLowerCase().includes(q)
+        || (g(c.idx).tags||'').toLowerCase().includes(q)
+        || (g(c.idx).email||'').toLowerCase().includes(q)
+        || (age && String(age).includes(q));
+    });
+  }
+  // Basic filter (single select)
+  if (filter === 'photo') list = list.filter(c => c.file);
+  else if (filter === 'nophoto') list = list.filter(c => !c.file);
+  else if (filter === 'rated') list = list.filter(c => dr(c) > 0);
+  else if (filter === 'video') list = list.filter(c => dv(c).length > 0);
+
+  // Segment filter (multi-select OR)
+  if (activeSegs.size) {
+    list = list.filter(c => {
+      const u = g(c.idx);
+      for (const seg of activeSegs) { if (u[seg]) return true; }
+      return false;
+    });
+  }
+  // Location filter (multi-select OR)
+  if (activeLocs.size) {
+    list = list.filter(c => {
+      const u = g(c.idx);
+      for (const loc of activeLocs) { if (u[loc]) return true; }
+      return false;
+    });
+  }
+  // Age group filter (multi-select OR)
+  if (activeAges.size) {
+    list = list.filter(c => {
+      const age = da(c);
+      for (const ag of activeAges) { if (ageInGroup(age, ag)) return true; }
+      return false;
+    });
+  }
+
+  if (sort === 'name') list.sort((a,b) => dn(a).localeCompare(dn(b)));
+  else if (sort === 'rating') list.sort((a,b) => dr(b) - dr(a));
+  else if (sort === 'age') list.sort((a,b) => (da(b)||0) - (da(a)||0));
+  else list.sort((a,b) => a.idx - b.idx);
+  return list;
+}
+
+function addNewProfile() {
+  const maxIdx = contacts.reduce((mx, c) => Math.max(mx, c.idx), 0);
+  const idx = maxIdx + 1;
+  const c = { idx, full: 'New Contact', phone: '', file: null, age: null, custom: true };
+  contacts.push(c);
+  saveCustom();
+  s(idx, { name: 'New Contact' });
+  updateCounts();
+  render();
+  openProfile(idx);
+  setTimeout(() => document.getElementById('fieldName').select(), 200);
+}
+function updateCounts() {
+  document.getElementById('totalCount').textContent = contacts.length;
+  document.getElementById('photoCount').textContent = contacts.filter(c => c.file).length;
+}
+document.getElementById('addNewBtn').addEventListener('click', addNewProfile);
+
+const grid = document.getElementById('grid');
+function render() {
+  const list = getList();
+  document.getElementById('showCount').textContent = list.length;
+  if (!list.length) { grid.innerHTML = '<div class="no-results">No contacts found.</div>'; return; }
+  grid.innerHTML = list.map(c => {
+    const r = dr(c), age = da(c);
+    const stars = Array.from({length:5},(_,i)=>starSVG(i<r)).join('');
+    const ageHtml = age ? `<span class="card-age">${age}</span>` : '';
+    const u = g(c.idx);
+    let badges = '';
+    if (u.fav) badges += '<span class="badge badge-fav">FAV</span>';
+    if (u.urgent) badges += '<span class="badge badge-urgent">URGENT</span>';
+    if (u.chichi) badges += '<span class="badge badge-chichi">CHICHI</span>';
+    if (u.nyash) badges += '<span class="badge badge-nyash">NYASH</span>';
+    if (u.creampie) badges += '<span class="badge badge-creampie">CREAM PIE</span>';
+    if (u.skinnychatte) badges += '<span class="badge badge-skinnychatte">SKINNY</span>';
+    if (u.needcreampie) badges += '<span class="badge badge-needcreampie">NEED CP</span>';
+    if (u.tightpussy) badges += '<span class="badge badge-tightpussy">TP</span>';
+    if (u.premium) badges += '<span class="badge badge-premium">VIP</span>';
+    if (u.juicypussy) badges += '<span class="badge badge-juicypussy">JP</span>';
+    if (u.nairobi) badges += '<span class="badge badge-nairobi">NBI</span>';
+    if (u.tokyo) badges += '<span class="badge badge-tokyo">TYO</span>';
+    if (u.toronto) badges += '<span class="badge badge-toronto">YYZ</span>';
+    if (u.nyc) badges += '<span class="badge badge-nyc">NYC</span>';
+    if (u.calgary) badges += '<span class="badge badge-calgary">YYC</span>';
+    if (u.lagos) badges += '<span class="badge badge-lagos">LOS</span>';
+    if (u.montreal) badges += '<span class="badge badge-montreal">YUL</span>';
+    if (u.dubai) badges += '<span class="badge badge-dubai">DXB</span>';
+    const badgeHtml = badges ? `<div class="card-badges">${badges}</div>` : '';
+    const pp = u.profilePhoto;
+    const hasUploadedProfile = pp && pp !== 'file';
+    const useFile = (!pp && c.file) || (pp === 'file' && c.file);
+    let img;
+    if (hasUploadedProfile) {
+      img = `<img class="card-img" data-ppkey="${pp}" src="" alt="${dn(c)}" loading="lazy" style="display:none"><div class="card-placeholder">&#9679;</div>`;
+    } else if (useFile) {
+      img = `<img class="card-img" src="photos/${c.file}" alt="${dn(c)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="card-placeholder" style="display:none">&#9679;</div>`;
+    } else {
+      img = `<div class="card-placeholder">&#9679;</div>`;
+    }
+    return `<div class="card" data-idx="${c.idx}">${badgeHtml}${img}
+      <div class="card-info">
+        <div class="card-name">${dn(c)}</div>
+        <div class="card-meta">${ageHtml}<span>${dp(c)}</span></div>
+        <div class="card-stars">${stars}</div>
+      </div></div>`;
+  }).join('');
+  loadCardProfilePhotos();
+  renderFavs();
+}
+function loadCardProfilePhotos() {
+  const imgs = grid.querySelectorAll('img[data-ppkey]');
+  imgs.forEach(img => {
+    const key = img.dataset.ppkey;
+    loadPhotos([key]).then(([data]) => {
+      if (data) {
+        img.src = data;
+        img.style.display = '';
+        const ph = img.nextElementSibling;
+        if (ph) ph.style.display = 'none';
+      }
+    });
+  });
+}
+
+grid.addEventListener('click', e => {
+  const card = e.target.closest('.card');
+  if (card) openProfile(parseInt(card.dataset.idx));
+});
+document.getElementById('searchInput').addEventListener('input', e => { search = e.target.value; render(); });
+// Basic filters (single select)
+document.querySelectorAll('.fbtn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.fbtn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  filter = b.dataset.filter; render();
+}));
+// Segment multi-select
+document.querySelectorAll('.seg-btn').forEach(b => b.addEventListener('click', () => {
+  const key = b.dataset.seg;
+  if (activeSegs.has(key)) { activeSegs.delete(key); b.classList.remove('on'); }
+  else { activeSegs.add(key); b.classList.add('on'); }
+  render();
+}));
+// Location multi-select
+document.querySelectorAll('.loc-btn').forEach(b => b.addEventListener('click', () => {
+  const key = b.dataset.loc;
+  if (activeLocs.has(key)) { activeLocs.delete(key); b.classList.remove('on'); }
+  else { activeLocs.add(key); b.classList.add('on'); }
+  render();
+}));
+// Age group multi-select
+document.querySelectorAll('.age-btn').forEach(b => b.addEventListener('click', () => {
+  const key = b.dataset.age;
+  if (activeAges.has(key)) { activeAges.delete(key); b.classList.remove('on'); }
+  else { activeAges.add(key); b.classList.add('on'); }
+  render();
+}));
+document.getElementById('sortSelect').addEventListener('change', e => { sort = e.target.value; render(); });
+
+// === FAVOURITES CAROUSEL ===
+function renderFavs() {
+  const favs = contacts.filter(c => g(c.idx).fav);
+  const strip = document.getElementById('favStrip');
+  const scroll = document.getElementById('favScroll');
+  if (!favs.length) { strip.classList.remove('has-favs'); return; }
+  strip.classList.add('has-favs');
+  scroll.innerHTML = favs.map(c => {
+    const u = g(c.idx);
+    let bhtml = '';
+    if (u.urgent) bhtml += '<span class="badge badge-urgent" style="font-size:8px;padding:1px 5px">URGENT</span>';
+    if (u.chichi) bhtml += '<span class="badge badge-chichi" style="font-size:8px;padding:1px 5px">CHICHI</span>';
+    if (u.nyash) bhtml += '<span class="badge badge-nyash" style="font-size:8px;padding:1px 5px">NYASH</span>';
+    if (u.creampie) bhtml += '<span class="badge badge-creampie" style="font-size:8px;padding:1px 5px">CREAM PIE</span>';
+    if (u.skinnychatte) bhtml += '<span class="badge badge-skinnychatte" style="font-size:8px;padding:1px 5px">SKINNY</span>';
+    if (u.needcreampie) bhtml += '<span class="badge badge-needcreampie" style="font-size:8px;padding:1px 5px">NEED CP</span>';
+    if (u.tightpussy) bhtml += '<span class="badge badge-tightpussy" style="font-size:8px;padding:1px 5px">TP</span>';
+    if (u.premium) bhtml += '<span class="badge badge-premium" style="font-size:8px;padding:1px 5px">VIP</span>';
+    if (u.juicypussy) bhtml += '<span class="badge badge-juicypussy" style="font-size:8px;padding:1px 5px">JP</span>';
+    if (u.nairobi) bhtml += '<span class="badge badge-nairobi" style="font-size:8px;padding:1px 5px">NBI</span>';
+    if (u.tokyo) bhtml += '<span class="badge badge-tokyo" style="font-size:8px;padding:1px 5px">TYO</span>';
+    if (u.toronto) bhtml += '<span class="badge badge-toronto" style="font-size:8px;padding:1px 5px">YYZ</span>';
+    if (u.nyc) bhtml += '<span class="badge badge-nyc" style="font-size:8px;padding:1px 5px">NYC</span>';
+    if (u.calgary) bhtml += '<span class="badge badge-calgary" style="font-size:8px;padding:1px 5px">YYC</span>';
+    if (u.lagos) bhtml += '<span class="badge badge-lagos" style="font-size:8px;padding:1px 5px">LOS</span>';
+    if (u.montreal) bhtml += '<span class="badge badge-montreal" style="font-size:8px;padding:1px 5px">YUL</span>';
+    if (u.dubai) bhtml += '<span class="badge badge-dubai" style="font-size:8px;padding:1px 5px">DXB</span>';
+    const pp = u.profilePhoto;
+    const hasUp = pp && pp !== 'file';
+    const useFile = (!pp && c.file) || (pp === 'file' && c.file);
+    let imgH;
+    if (hasUp) {
+      imgH = `<img data-ppkey="${pp}" src="" alt="${dn(c)}" style="display:none">`;
+    } else if (useFile) {
+      imgH = `<img src="photos/${c.file}" alt="${dn(c)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`;
+    } else {
+      imgH = '';
+    }
+    const plH = `<div class="fav-placeholder" ${(useFile && !hasUp)?'style="display:none"':''}>&#9679;</div>`;
+    return `<div class="fav-card" data-idx="${c.idx}">
+      ${imgH}${plH}
+      <div class="fav-card-name">${dn(c)}</div>
+      <div class="fav-card-badges">${bhtml}</div>
+    </div>`;
+  }).join('');
+  // Load uploaded profile photos in fav strip
+  scroll.querySelectorAll('img[data-ppkey]').forEach(img => {
+    loadPhotos([img.dataset.ppkey]).then(([data]) => {
+      if (data) { img.src = data; img.style.display = ''; const ph = img.nextElementSibling; if (ph) ph.style.display = 'none'; }
+    });
+  });
+}
+document.getElementById('favScroll').addEventListener('click', e => {
+  const card = e.target.closest('.fav-card');
+  if (card) openProfile(parseInt(card.dataset.idx));
+});
+document.getElementById('favLeft').addEventListener('click', () => {
+  document.getElementById('favScroll').scrollBy({ left: -260, behavior: 'smooth' });
+});
+document.getElementById('favRight').addEventListener('click', () => {
+  document.getElementById('favScroll').scrollBy({ left: 260, behavior: 'smooth' });
+});
+// Auto-scroll favourites carousel
+let favAutoTimer = null;
+function startFavAuto() {
+  stopFavAuto();
+  favAutoTimer = setInterval(() => {
+    const el = document.getElementById('favScroll');
+    if (!el || !el.scrollWidth) return;
+    if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 10) {
+      el.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      el.scrollBy({ left: 140, behavior: 'smooth' });
+    }
+  }, 3000);
+}
+function stopFavAuto() { if (favAutoTimer) { clearInterval(favAutoTimer); favAutoTimer = null; } }
+startFavAuto();
+document.getElementById('favScroll').addEventListener('mouseenter', stopFavAuto);
+document.getElementById('favScroll').addEventListener('mouseleave', startFavAuto);
+document.getElementById('favLeft').addEventListener('mouseenter', stopFavAuto);
+document.getElementById('favLeft').addEventListener('mouseleave', startFavAuto);
+document.getElementById('favRight').addEventListener('mouseenter', stopFavAuto);
+document.getElementById('favRight').addEventListener('mouseleave', startFavAuto);
+
+// === PROFILE MODAL ===
+let active = null, ci = 0, allPhotos = [];
+
+async function openProfile(idx) {
+  const c = contacts.find(x => x.idx === idx);
+  if (!c) return;
+  active = c; ci = 0;
+  const u = g(idx);
+
+  // Build photo list: original + uploaded
+  allPhotos = [];
+  if (c.file) allPhotos.push({ type:'file', src:'photos/'+c.file });
+  const ukeys = uploadedKeys(c);
+  if (ukeys.length) {
+    const loaded = await loadPhotos(ukeys);
+    loaded.forEach((data,i) => { if(data) allPhotos.push({ type:'uploaded', key:ukeys[i], src:data }); });
+  }
+
+  updateCarousel();
+  renderThumbs();
+
+  document.getElementById('profileName').textContent = dn(c);
+  document.getElementById('profileIdx').textContent = `#${c.idx}`;
+  const age = da(c);
+  const badge = document.getElementById('profileAgeBadge');
+  if (age) { badge.textContent = `Age ${age}`; badge.style.display = ''; }
+  else { badge.style.display = 'none'; }
+
+  document.getElementById('fieldPhone').value = dp(c);
+  document.getElementById('fieldPhone2').value = dp2(c);
+  document.getElementById('fieldName').value = dn(c);
+  document.getElementById('fieldAge').value = age || '';
+  document.getElementById('fieldEmail').value = u.email || '';
+  document.getElementById('fieldWorkplace').value = u.workplace || '';
+  document.getElementById('fieldDescription').value = u.description || '';
+  document.getElementById('checkSanno').checked = !!u.sanno;
+  document.getElementById('catSanno').classList.toggle('checked', !!u.sanno);
+  document.getElementById('checkMaputte').checked = !!u.maputte;
+  document.getElementById('catMaputte').classList.toggle('checked', !!u.maputte);
+  document.getElementById('checkWifey').checked = !!u.wifey;
+  document.getElementById('catWifey').classList.toggle('checked', !!u.wifey);
+  document.getElementById('fieldTags').value = u.tags || '';
+  document.getElementById('fieldLastContact').value = u.lastContact || '';
+  document.getElementById('fieldNotes').value = u.notes || '';
+
+  renderStars(dr(c));
+  renderVideos();
+
+  // Set toggle/checkbox states
+  const favBtn = document.getElementById('toggleFav');
+  const urgBtn = document.getElementById('toggleUrgent');
+  const chiCb = document.getElementById('checkChichi');
+  const nyaCb = document.getElementById('checkNyash');
+  const cpCb = document.getElementById('checkCreampie');
+  favBtn.classList.toggle('on-fav', !!u.fav);
+  urgBtn.classList.toggle('on-urgent', !!u.urgent);
+  chiCb.checked = !!u.chichi;
+  nyaCb.checked = !!u.nyash;
+  cpCb.checked = !!u.creampie;
+  document.getElementById('catChichi').classList.toggle('checked', !!u.chichi);
+  document.getElementById('catNyash').classList.toggle('checked', !!u.nyash);
+  document.getElementById('catCreampie').classList.toggle('checked', !!u.creampie);
+  document.getElementById('checkSkinnychatte').checked = !!u.skinnychatte;
+  document.getElementById('catSkinnychatte').classList.toggle('checked', !!u.skinnychatte);
+  document.getElementById('checkNeedcreampie').checked = !!u.needcreampie;
+  document.getElementById('catNeedcreampie').classList.toggle('checked', !!u.needcreampie);
+  document.getElementById('checkTightpussy').checked = !!u.tightpussy;
+  document.getElementById('catTightpussy').classList.toggle('checked', !!u.tightpussy);
+  document.getElementById('checkPremium').checked = !!u.premium;
+  document.getElementById('catPremium').classList.toggle('checked', !!u.premium);
+  document.getElementById('checkJuicypussy').checked = !!u.juicypussy;
+  document.getElementById('catJuicypussy').classList.toggle('checked', !!u.juicypussy);
+  const locs = ['nairobi','tokyo','toronto','nyc','calgary','lagos','montreal','dubai'];
+  locs.forEach(loc => {
+    document.getElementById('check'+loc[0].toUpperCase()+loc.slice(1)).checked = !!u[loc];
+    document.getElementById('cat'+loc[0].toUpperCase()+loc.slice(1)).classList.toggle('checked', !!u[loc]);
+  });
+
+  document.getElementById('deleteBtn').style.display = '';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  active = null;
+}
+
+function getProfilePhotoId() {
+  if (!active) return null;
+  return g(active.idx).profilePhoto || (active.file ? 'file' : null);
+}
+function isCurrentProfile(photo) {
+  const pid = getProfilePhotoId();
+  if (!pid) return false;
+  if (pid === 'file' && photo.type === 'file') return true;
+  if (photo.type === 'uploaded' && photo.key === pid) return true;
+  return false;
+}
+
+function updateCarousel() {
+  const img = document.getElementById('carouselImg');
+  const empty = document.getElementById('carouselEmpty');
+  const car = document.getElementById('carousel');
+  const dots = document.getElementById('carDots');
+  const counter = document.getElementById('carCounter');
+  const profBtn = document.getElementById('setProfileBtn');
+
+  if (allPhotos.length) {
+    img.onerror = () => { img.style.display = 'none'; };
+    img.src = allPhotos[ci].src; img.style.display = 'block'; empty.style.display = 'none';
+    car.classList.toggle('multi', allPhotos.length > 1);
+    dots.innerHTML = allPhotos.map((_,i) => `<button class="carousel-dot${i===ci?' active':''}" data-i="${i}"></button>`).join('');
+    counter.textContent = `${ci+1} / ${allPhotos.length}`;
+    counter.style.display = '';
+    const isCur = isCurrentProfile(allPhotos[ci]);
+    profBtn.style.display = '';
+    profBtn.textContent = isCur ? 'Profile Photo' : 'Set as Profile';
+    profBtn.classList.toggle('is-current', isCur);
+  } else {
+    img.style.display = 'none'; empty.style.display = 'flex';
+    car.classList.remove('multi'); dots.innerHTML = '';
+    counter.style.display = 'none';
+    profBtn.style.display = 'none';
+  }
+}
+
+function showSlide(i) {
+  if (!allPhotos.length) return;
+  ci = (i + allPhotos.length) % allPhotos.length;
+  updateCarousel();
+}
+
+function renderThumbs() {
+  const row = document.getElementById('thumbRow');
+  if (!allPhotos.length) { row.innerHTML = ''; return; }
+  row.innerHTML = allPhotos.map((p,i) => {
+    const del = p.type === 'uploaded' ? `<button class="thumb-del" data-dk="${p.key}">&times;</button>` : '';
+    const profClass = isCurrentProfile(p) ? ' is-profile' : '';
+    return `<div class="thumb-wrap">${del}<img class="thumb${profClass}" src="${p.src}" data-ti="${i}"></div>`;
+  }).join('');
+}
+
+document.getElementById('thumbRow').addEventListener('click', async e => {
+  if (e.target.classList.contains('thumb')) { showSlide(parseInt(e.target.dataset.ti)); return; }
+  const del = e.target.closest('.thumb-del');
+  if (del && active) {
+    const key = del.dataset.dk;
+    await deletePhoto(key);
+    const keys = uploadedKeys(active).filter(k => k !== key);
+    s(active.idx, { uploadedPhotos: keys });
+    allPhotos = allPhotos.filter(p => p.key !== key);
+    if (ci >= allPhotos.length) ci = Math.max(0, allPhotos.length - 1);
+    updateCarousel(); renderThumbs();
+  }
+});
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target.id==='modalOverlay') closeModal(); });
+document.getElementById('carPrev').addEventListener('click', () => showSlide(ci-1));
+document.getElementById('carNext').addEventListener('click', () => showSlide(ci+1));
+document.getElementById('carDots').addEventListener('click', e => { if(e.target.classList.contains('carousel-dot')) showSlide(parseInt(e.target.dataset.i)); });
+
+document.getElementById('carouselImg').addEventListener('click', () => {
+  if (!allPhotos.length) return;
+  document.getElementById('zoomImg').src = allPhotos[ci].src;
+  document.getElementById('zoomOverlay').classList.add('open');
+});
+document.getElementById('zoomOverlay').addEventListener('click', () => { document.getElementById('zoomOverlay').classList.remove('open'); });
+
+// Set as Profile Photo
+document.getElementById('setProfileBtn').addEventListener('click', () => {
+  if (!active || !allPhotos.length) return;
+  const photo = allPhotos[ci];
+  const pid = photo.type === 'file' ? 'file' : photo.key;
+  s(active.idx, { profilePhoto: pid });
+  updateCarousel();
+  renderThumbs();
+  render();
+});
+
+// Stars
+function renderStars(r) {
+  document.getElementById('starRow').innerHTML = Array.from({length:5},(_,i)=>
+    `<button class="star-btn" data-r="${i+1}">${starSVG(i<r)}</button>`).join('');
+}
+document.getElementById('starRow').addEventListener('click', e => {
+  const b = e.target.closest('.star-btn');
+  if (!b||!active) return;
+  const r = parseInt(b.dataset.r);
+  s(active.idx, { rating: r }); renderStars(r); render();
+});
+
+// Fav / Urgent toggles
+document.getElementById('toggleFav').addEventListener('click', () => {
+  if (!active) return;
+  const u = g(active.idx);
+  const nv = !u.fav;
+  s(active.idx, { fav: nv });
+  document.getElementById('toggleFav').classList.toggle('on-fav', nv);
+  render();
+});
+document.getElementById('toggleUrgent').addEventListener('click', () => {
+  if (!active) return;
+  const u = g(active.idx);
+  const nv = !u.urgent;
+  s(active.idx, { urgent: nv });
+  document.getElementById('toggleUrgent').classList.toggle('on-urgent', nv);
+  render();
+});
+// Chichi / Nyash checkboxes
+document.getElementById('checkChichi').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { chichi: e.target.checked });
+  document.getElementById('catChichi').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkNyash').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { nyash: e.target.checked });
+  document.getElementById('catNyash').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkCreampie').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { creampie: e.target.checked });
+  document.getElementById('catCreampie').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkSkinnychatte').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { skinnychatte: e.target.checked });
+  document.getElementById('catSkinnychatte').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkNeedcreampie').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { needcreampie: e.target.checked });
+  document.getElementById('catNeedcreampie').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkTightpussy').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { tightpussy: e.target.checked });
+  document.getElementById('catTightpussy').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkPremium').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { premium: e.target.checked });
+  document.getElementById('catPremium').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkJuicypussy').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { juicypussy: e.target.checked });
+  document.getElementById('catJuicypussy').classList.toggle('checked', e.target.checked);
+  render();
+});
+document.getElementById('checkSanno').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { sanno: e.target.checked });
+  document.getElementById('catSanno').classList.toggle('checked', e.target.checked);
+});
+document.getElementById('checkMaputte').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { maputte: e.target.checked });
+  document.getElementById('catMaputte').classList.toggle('checked', e.target.checked);
+});
+document.getElementById('checkWifey').addEventListener('change', e => {
+  if (!active) return;
+  s(active.idx, { wifey: e.target.checked });
+  document.getElementById('catWifey').classList.toggle('checked', e.target.checked);
+});
+// Location checkboxes
+['nairobi','tokyo','toronto','nyc','calgary','lagos','montreal','dubai'].forEach(loc => {
+  const cap = loc[0].toUpperCase()+loc.slice(1);
+  document.getElementById('check'+cap).addEventListener('change', e => {
+    if (!active) return;
+    s(active.idx, { [loc]: e.target.checked });
+    document.getElementById('cat'+cap).classList.toggle('checked', e.target.checked);
+    render();
+  });
+});
+
+// WhatsApp
+document.getElementById('waMsg').addEventListener('click', () => {
+  if (!active) return;
+  window.open('https://wa.me/' + getWaNumber(active), '_blank');
+});
+document.getElementById('waCall').addEventListener('click', () => {
+  if (!active) return;
+  window.open('tel:' + dp(active).replace(/\s/g,''));
+});
+document.getElementById('waMsg2').addEventListener('click', () => {
+  if (!active) return;
+  const p2 = dp2(active);
+  if (!p2) return alert('No second phone number');
+  window.open('https://wa.me/' + formatWaNum(p2), '_blank');
+});
+document.getElementById('waCall2').addEventListener('click', () => {
+  if (!active) return;
+  const p2 = dp2(active);
+  if (!p2) return alert('No second phone number');
+  window.open('tel:' + p2.replace(/\s/g,''));
+});
+
+// === VIDEO UPLOAD & PLAYBACK ===
+async function saveVideo(key, blob) {
+  await dbReady;
+  return new Promise((res, rej) => {
+    const tx = photoDB.transaction('videos','readwrite');
+    tx.objectStore('videos').put(blob, key);
+    tx.oncomplete = () => res();
+    tx.onerror = e => rej(e);
+  });
+}
+async function loadVideo(key) {
+  await dbReady;
+  return new Promise(res => {
+    const tx = photoDB.transaction('videos','readonly');
+    const r = tx.objectStore('videos').get(key);
+    r.onsuccess = () => res(r.result || null);
+    r.onerror = () => res(null);
+  });
+}
+async function deleteVideo(key) {
+  await dbReady;
+  return new Promise(res => {
+    const tx = photoDB.transaction('videos','readwrite');
+    tx.objectStore('videos').delete(key);
+    tx.oncomplete = () => res();
+  });
+}
+function videoKeys(c) { return g(c.idx).uploadedVideos || []; }
+
+async function renderVideos() {
+  const list = document.getElementById('videoList');
+  if (!active) return;
+  const keys = videoKeys(active);
+  if (!keys.length) { list.innerHTML = '<div style="color:var(--text2);font-size:11px;padding:2px 0">No videos yet.</div>'; return; }
+  list.innerHTML = '';
+  for (const vk of keys) {
+    const blob = await loadVideo(vk.key);
+    if (!blob) continue;
+    const url = URL.createObjectURL(blob);
+    const card = document.createElement('div');
+    card.className = 'vid-card';
+    card.innerHTML = `<video src="${url}" controls preload="metadata"></video>
+      <div class="vid-card-bar"><span class="vid-card-name">${vk.name}</span>
+      <button class="vid-card-del" data-vkey="${vk.key}">&times;</button></div>`;
+    list.appendChild(card);
+  }
+}
+document.getElementById('videoList').addEventListener('click', async e => {
+  const del = e.target.closest('.vid-card-del');
+  if (!del || !active) return;
+  const key = del.dataset.vkey;
+  await deleteVideo(key);
+  const keys = videoKeys(active).filter(v => v.key !== key);
+  s(active.idx, { uploadedVideos: keys });
+  renderVideos(); render();
+});
+
+const videoDropArea = document.getElementById('videoDropArea');
+const videoFileInput = document.getElementById('videoFileInput');
+document.getElementById('videoBrowseBtn').addEventListener('click', e => { e.stopPropagation(); videoFileInput.click(); });
+videoDropArea.addEventListener('click', () => videoFileInput.click());
+['dragenter','dragover'].forEach(ev => videoDropArea.addEventListener(ev, e => { e.preventDefault(); videoDropArea.classList.add('dragover'); }));
+['dragleave','drop'].forEach(ev => videoDropArea.addEventListener(ev, e => { e.preventDefault(); videoDropArea.classList.remove('dragover'); }));
+videoDropArea.addEventListener('drop', e => { handleVideoFiles(e.dataTransfer.files); });
+videoFileInput.addEventListener('change', e => { handleVideoFiles(e.target.files); videoFileInput.value = ''; });
+
+async function handleVideoFiles(files) {
+  if (!active || !files.length) return;
+  for (const file of files) {
+    if (!file.type.startsWith('video/')) continue;
+    const key = `vid_${active.idx}_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+    await saveVideo(key, file);
+    const keys = videoKeys(active);
+    keys.push({ key, name: file.name, size: file.size });
+    s(active.idx, { uploadedVideos: keys });
+  }
+  renderVideos(); render();
+}
+
+// Save
+document.getElementById('saveBtn').addEventListener('click', () => {
+  if (!active) return;
+  const ageVal = document.getElementById('fieldAge').value.trim();
+  s(active.idx, {
+    name: document.getElementById('fieldName').value.trim(),
+    phone: document.getElementById('fieldPhone').value.trim(),
+    phone2: document.getElementById('fieldPhone2').value.trim(),
+    age: ageVal ? parseInt(ageVal) : null,
+    email: document.getElementById('fieldEmail').value.trim(),
+    workplace: document.getElementById('fieldWorkplace').value.trim(),
+    description: document.getElementById('fieldDescription').value.trim(),
+    tags: document.getElementById('fieldTags').value.trim(),
+    lastContact: document.getElementById('fieldLastContact').value,
+    notes: document.getElementById('fieldNotes').value.trim()
+  });
+  if (active.custom) {
+    active.full = document.getElementById('fieldName').value.trim() || active.full;
+    active.phone = document.getElementById('fieldPhone').value.trim();
+    const av = document.getElementById('fieldAge').value.trim();
+    active.age = av ? parseInt(av) : null;
+    saveCustom();
+  }
+  document.getElementById('profileName').textContent = dn(active);
+  const badge = document.getElementById('profileAgeBadge');
+  const age = da(active);
+  if (age) { badge.textContent = `Age ${age}`; badge.style.display = ''; }
+  else badge.style.display = 'none';
+  render();
+  const btn = document.getElementById('saveBtn');
+  btn.textContent = 'Saved!'; btn.style.background = '#27ae60';
+  setTimeout(() => { btn.textContent = 'Save Changes'; btn.style.background = ''; }, 1200);
+});
+
+// Delete custom contact
+document.getElementById('deleteBtn').addEventListener('click', () => {
+  if (!active) return;
+  document.getElementById('confirmName').textContent = dn(active);
+  document.getElementById('confirmOverlay').classList.add('open');
+});
+document.getElementById('confirmCancel').addEventListener('click', () => {
+  document.getElementById('confirmOverlay').classList.remove('open');
+});
+document.getElementById('confirmOverlay').addEventListener('click', e => {
+  if (e.target.id === 'confirmOverlay') document.getElementById('confirmOverlay').classList.remove('open');
+});
+document.getElementById('confirmYes').addEventListener('click', () => {
+  if (!active) return;
+  const idx = active.idx;
+  const i = contacts.findIndex(c => c.idx === idx);
+  if (i !== -1) contacts.splice(i, 1);
+  if (!active.custom) {
+    const del = loadDeleted(); del.push(idx); saveDeleted(del);
+  }
+  delete ud[idx]; save();
+  saveCustom();
+  document.getElementById('confirmOverlay').classList.remove('open');
+  closeModal();
+  updateCounts();
+  render();
+});
+
+// === PHOTO UPLOAD (drag-drop + browse) ===
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('fileInput');
+const folderInput = document.getElementById('folderInput');
+
+document.getElementById('browseBtn').addEventListener('click', e => { e.stopPropagation(); fileInput.click(); });
+document.getElementById('browseFolderBtn').addEventListener('click', e => { e.stopPropagation(); folderInput.click(); });
+dropArea.addEventListener('click', () => fileInput.click());
+
+['dragenter','dragover'].forEach(ev => dropArea.addEventListener(ev, e => { e.preventDefault(); dropArea.classList.add('dragover'); }));
+['dragleave','drop'].forEach(ev => dropArea.addEventListener(ev, e => { e.preventDefault(); dropArea.classList.remove('dragover'); }));
+
+dropArea.addEventListener('drop', e => { handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', e => { handleFiles(e.target.files); });
+folderInput.addEventListener('change', e => { handleFiles(e.target.files); folderInput.value = ''; });
+
+async function handleFiles(fileList) {
+  if (!active || !fileList.length) return;
+  const imgExts = /\.(jpe?g|png|gif|webp|bmp|svg|heic|heif|avif)$/i;
+  const files = Array.from(fileList).filter(f => f.type.startsWith('image/') || imgExts.test(f.name));
+  fileInput.value = '';
+  if (!files.length) return;
+  const dbOk = await dbReady;
+  if (!dbOk || !photoDB) {
+    alert('Cannot save photos — IndexedDB is not available.\nTry opening this file in Chrome via localhost instead of file://');
+    return;
+  }
+  try {
+    for (const file of files) {
+      const dataUrl = await readFile(file);
+      const key = `photo_${active.idx}_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+      await savePhoto(key, dataUrl);
+      const keys = uploadedKeys(active);
+      keys.push(key);
+      s(active.idx, { uploadedPhotos: keys });
+      allPhotos.push({ type:'uploaded', key, src:dataUrl });
+    }
+    ci = allPhotos.length - 1;
+    updateCarousel(); renderThumbs();
+  } catch(err) {
+    console.error('Photo upload failed:', err);
+    alert('Photo upload failed: ' + (err.message || err));
+  }
+}
+
+async function readFile(file) {
+  const isHeic = /\.(heic|heif)$/i.test(file.name) || file.type === 'image/heic' || file.type === 'image/heif';
+  let blob = file;
+  if (isHeic && typeof heic2any !== 'undefined') {
+    blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.85 });
+    if (Array.isArray(blob)) blob = blob[0];
+  }
+  return new Promise(res => {
+    const r = new FileReader();
+    r.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 1200;
+        let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+          else { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        res(c.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => res(r.result);
+      img.src = r.result;
+    };
+    r.readAsDataURL(blob);
+  });
+}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('zoomOverlay').classList.contains('open'))
+      document.getElementById('zoomOverlay').classList.remove('open');
+    else closeModal();
+  }
+  if (active && document.getElementById('modalOverlay').classList.contains('open')) {
+    if (e.key === 'ArrowLeft') showSlide(ci-1);
+    if (e.key === 'ArrowRight') showSlide(ci+1);
+  }
+});
+
+render();
+</script>
+</body>
+</html>
